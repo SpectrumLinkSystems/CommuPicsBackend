@@ -18,5 +18,5 @@ from django.urls import path
 from django.http import HttpResponse
 
 urlpatterns = [
-    path('hello/', lambda request: HttpResponse('Hello, World!')),
+    path('hello/', lambda request: HttpResponse('Hello, World from Django!')),
 ]
