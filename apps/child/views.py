@@ -11,14 +11,14 @@ class ChildView(APIView):
     def __init__(self):
         self.cloudinary_service = CloudinaryService()
 
-    async def get(self, request):
-        # response = await ImageRecognitionService.recognize_image()
-        # return Response(response, status=status.HTTP_200_OK)
-        response = await ExternalApiArasaac.search_berry()
-        return Response(response, status=status.HTTP_200_OK)
+    # async def get(self, request):
+    #     # response = await ImageRecognitionService.recognize_image()
+    #     # return Response(response, status=status.HTTP_200_OK)
+    #     response = await ExternalApiArasaac.search_berry()
+    #     return Response(response, status=status.HTTP_200_OK)
     
-    async def post(self, request):
-        # response = await ImageRecognitionService.recognize_image()
-        # return Response(response, status=status.HTTP_201_CREATED)
-        response = self.cloudinary_service.upload_image(image="/home/DRN-00X/Downloads/milk_photo.jpg")
-        return Response(response, status=status.HTTP_201_CREATED)
+    # async def post(self, request):
+    #     # response = await ImageRecognitionService.recognize_image()
+    #     # return Response(response, status=status.HTTP_201_CREATED)
+    #     response = self.cloudinary_service.upload_image(image="/home/DRN-00X/Downloads/milk_photo.jpg")
+    #     return Response(response, status=status.HTTP_201_CREATED)

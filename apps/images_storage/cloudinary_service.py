@@ -16,6 +16,9 @@ class CloudinaryService:
     def upload_image(self, image):
         response = self.cloudinary.uploader.upload(image)
         return response
+    
+    def move_image(self, public_id, folder):
+        return self.cloudinary.uploader.rename(public_id, folder)
 
     def delete_image(self, public_id):
         return self.cloudinary.destroy(public_id)

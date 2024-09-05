@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'apps.child',
+    'apps.recognition',
     'parents',
 ]
 

@@ -20,10 +20,14 @@ from dotenv import load_dotenv, dotenv_values
 import os
 
 from apps.child.views import ChildView
+from apps.recognition.views import RecognitionView
+
 load_dotenv()
 urlpatterns = [
     path('hello/', lambda request: HttpResponse("Hello, World!")),
     path('parents/', include('parents.urls')),
     path('therapists/', include('therapists.urls')),
+    path('child/', ChildView.as_view()),
+    path('recognition/', RecognitionView.as_view()),
 ]
 

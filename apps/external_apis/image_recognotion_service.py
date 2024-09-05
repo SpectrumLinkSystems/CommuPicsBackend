@@ -1,10 +1,11 @@
+import json
 import os
 from dotenv import load_dotenv, dotenv_values
 import httpx
 
 
 class ImageRecognitionService:
-    async def recognize_image():
+    async def recognize_image(self, image_url):
         load_dotenv()
         collections = [
             {"Animales": ["Mamíferos", "Aves", "Reptiles"]},
@@ -27,7 +28,7 @@ class ImageRecognitionService:
                         {
                             "type": "image_url",
                             "image_url": {
-                                "url": "https://cdn-icons-png.flaticon.com/512/648/648770.png",
+                                "url": f"{image_url}",
                                 "detail": "low",
                             },
                         },
@@ -65,4 +66,10 @@ class ImageRecognitionService:
                 headers=headers,
                 json=payload,
             )
-            return response.json()
+            content_str = response.json()["choices"][0]["message"]["content"].strip("```json\n")
+            
+            try:
+                json_content = json.loads(content_str)
+                return json_content
+            except json.JSONDecodeError as e:
+                print("Error al decodificar el JSON:", e)
