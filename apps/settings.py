@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'rest_framework',
+    'apps.child'
 ]
 
 MIDDLEWARE = [
@@ -59,6 +61,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'apps.wsgi.application'
 
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'UNAUTHENTICATED_USER': None,
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
