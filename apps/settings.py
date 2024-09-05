@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cloudinary',
     'rest_framework',
+    'apps.child',
     'parents',
 ]
 
@@ -61,6 +63,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'apps.wsgi.application'
 
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'UNAUTHENTICATED_USER': None,
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -94,7 +100,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-REST_FRAMEWORK = {
-    'UNAUTHENTICATED_USER': None,  # Configuración para usuarios no autenticados
-}

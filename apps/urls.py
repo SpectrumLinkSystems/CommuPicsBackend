@@ -16,8 +16,13 @@ Including another URLconf
 """
 from django.http import HttpResponse
 from django.urls import path, include
+from dotenv import load_dotenv, dotenv_values
+import os
 
+from apps.child.views import ChildView
+load_dotenv()
 urlpatterns = [
+    path('hello/', lambda request: HttpResponse("Hello, World!")),
     path('parents/', include('parents.urls')),
     path('therapists/', include('therapists.urls')),
 ]
