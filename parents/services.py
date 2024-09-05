@@ -2,9 +2,9 @@
 from .models import Parent
 
 def create_parent(data):
-    allowed_fields = ['name', 'last_name', 'document_type', 'document_number', 'date_of_birth', 'document_front_validator', 'document_back_validator']
+    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator']
     filtered_data = {key: value for key, value in data.items() if key in allowed_fields}
-    print(filtered_data)
+    print("GAAAAAAA:", filtered_data)
     parent = Parent.objects.create(**filtered_data)
     return parent
 
