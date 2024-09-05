@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'adrf',
     'cloudinary',
     'rest_framework',
     'apps.child',
