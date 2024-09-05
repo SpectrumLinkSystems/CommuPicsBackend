@@ -14,17 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import path
+from django.urls import include, path
 from django.http import HttpResponse
-from dotenv import load_dotenv, dotenv_values
-import os
 
-from apps.child.views import ChildView
 from apps.recognition.views import RecognitionView
 
-load_dotenv()
 urlpatterns = [
     path('hello/', lambda request: HttpResponse("Hello, World!")),
-    path('child/', ChildView.as_view()),
-    path('recognition/', RecognitionView.as_view()),
+    path('api/', include('apps.child.urls')),
+    path('api/recognition/', RecognitionView.as_view()),
 ]
