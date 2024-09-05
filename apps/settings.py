@@ -33,7 +33,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
-    'apps.child'
+    'apps.child',
+    'apps.recognition',
 ]
 
 MIDDLEWARE = [
