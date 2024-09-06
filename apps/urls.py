@@ -18,5 +18,5 @@ from django.urls import path, include
 from django.http import HttpResponse
 
 urlpatterns = [
-    path('therapists/', include('apps.therapists.urls')),
+    path('', include('apps.therapists.urls')),
 ]
