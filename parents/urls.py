@@ -1,13 +1,12 @@
-from django.urls import path
-from .views import (
-    create_parent_view, get_all_parents_view, get_parent_view,
-    update_parent_view, delete_parent_view
-)
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ParentViewSet
 
+# Create a router and register our viewset with it.
+router = DefaultRouter()
+router.register(r'parents', ParentViewSet, basename='parents')
+
+# The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', get_all_parents_view, name='get_all_parents'),
-    path('create/', create_parent_view, name='create_parent'),
-    path('<int:parent_id>/', get_parent_view, name='get_parent'),
-    path('<int:parent_id>/update/', update_parent_view, name='update_parent'),
-    path('<int:parent_id>/delete/', delete_parent_view, name='delete_parent'),
+    path('', include(router.urls)),
 ]
