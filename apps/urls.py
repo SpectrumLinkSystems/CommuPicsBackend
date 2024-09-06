@@ -18,6 +18,6 @@ from django.http import HttpResponse
 from django.urls import path, include
 
 urlpatterns = [
-    path('parents/', include('parents.urls')),
+    path('', include('apps.parents.urls')),
 ]
 
