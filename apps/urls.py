@@ -25,8 +25,8 @@ from apps.recognition.views import RecognitionView
 load_dotenv()
 urlpatterns = [
     path('hello/', lambda request: HttpResponse(os.getenv("DB_NAME"))),
-    path('parents/', include('parents.urls')),
-    path('therapists/', include('therapists.urls')),
+    path('', include('apps.parents.urls')),
+    #path('therapists/', include('apps.therapists.urls')),
     path('api/', include('apps.child.urls')),
     path('recognition/', RecognitionView.as_view()),
 ]

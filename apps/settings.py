@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "apps.child",
     "apps.recognition",
     "apps.parents",
-    "apps.therapists"
+    #"apps.therapists"
 ]
 
 MIDDLEWARE = [
