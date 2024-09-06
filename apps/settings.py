@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "apps.child",
     "apps.recognition",
     "apps.parents",
-    #"apps.therapists"
+    "apps.therapists"
 ]
 
 MIDDLEWARE = [
@@ -111,3 +111,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    'UNAUTHENTICATED_USER': None,  # Configuración para usuarios no autenticados
+}

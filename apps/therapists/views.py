@@ -1,0 +1,42 @@
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Therapist
+from .serializers import TherapistSerializer
+from .services import create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist
+
+class TherapistViewSet(viewsets.ViewSet):
+    def create(self, request, *args, **kwargs):
+        therapist = create_therapist(request.data)
+        serializer = TherapistSerializer(therapist)
+        return Response({"message": "Therapist created", "therapist": serializer.data}, status=status.HTTP_201_CREATED)
+
+    def list(self, request, *args, **kwargs):
+        therapists = get_all_therapists()
+        serializer = TherapistSerializer(therapists, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        therapist_id = self.kwargs.get('pk')
+        therapist = get_therapist_by_id(therapist_id)
+        if therapist:
+            serializer = TherapistSerializer(therapist)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    def update(self, request, *args, **kwargs):
+        therapist_id = self.kwargs.get('pk')
+        therapist = update_therapist(therapist_id, request.data)
+        if therapist:
+            serializer = TherapistSerializer(therapist)
+            return Response({"message": "Therapist updated", "therapist": serializer.data})
+        else:
+            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    def destroy(self, request, *args, **kwargs):
+        therapist_id = self.kwargs.get('pk')
+        if delete_therapist(therapist_id):
+            return Response({"message": "Therapist deleted"})
+        else:
+            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)

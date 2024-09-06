@@ -14,7 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.urls import include, path
+from django.urls import path
 from django.http import HttpResponse
 from django.urls import path, include
 from dotenv import load_dotenv, dotenv_values
@@ -26,8 +26,7 @@ load_dotenv()
 urlpatterns = [
     path('hello/', lambda request: HttpResponse(os.getenv("DB_NAME"))),
     path('', include('apps.parents.urls')),
-    #path('therapists/', include('apps.therapists.urls')),
+    path('', include('apps.therapists.urls')),
     path('api/', include('apps.child.urls')),
     path('recognition/', RecognitionView.as_view()),
 ]
-
