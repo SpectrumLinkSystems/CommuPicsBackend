@@ -2,7 +2,9 @@ from django.conf.locale import ro
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from apps.child.views import ChildView, CollectionView, SubCollectionView, PictogramView
+from apps.child.views.child_view import ChildView
+from apps.child.views.collection_view import CollectionView, SubCollectionView
+from apps.child.views.pictogram_view import PictogramView
 
 router =DefaultRouter()
 

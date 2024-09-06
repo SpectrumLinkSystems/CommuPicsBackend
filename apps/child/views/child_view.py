@@ -1,5 +1,3 @@
-from django.db.models import query
-from rest_framework.response import Response
 from rest_framework import viewsets
 
 from apps.child.models.child import Child
