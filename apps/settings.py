@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
+    'apps.therapists'
 ]
 
 MIDDLEWARE = [
