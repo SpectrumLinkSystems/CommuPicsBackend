@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.child",
     "apps.recognition",
-    "parents",
-    "therapists"
+    "apps.parents",
+    "apps.therapists"
 ]
 
 MIDDLEWARE = [
