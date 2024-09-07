@@ -1,4 +1,3 @@
-# services.py
 from .models import Parent
 
 def create_parent(data):
@@ -20,7 +19,6 @@ def get_parent_by_id(parent_id):
 def update_parent(parent_id, data):
     try:
         parent = Parent.objects.get(id=parent_id)
-        # Actualiza solo los campos que existen en el modelo
         allowed_fields = ['name', 'last_name', 'document_type', 'document_number', 'date_of_birth', 'document_front_validator', 'document_back_validator']
         for key, value in data.items():
             if key in allowed_fields:

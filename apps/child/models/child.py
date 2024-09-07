@@ -5,4 +5,5 @@ class Child(models.Model):
     last_name = models.CharField(max_length=50)
     birth_date = models.DateField()
     autism_level = models.IntegerField()
-    parent = models.OneToOneField('parents.Parent', on_delete=models.CASCADE)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    parent = models.ForeignKey('parents.Parent', on_delete=models.CASCADE, related_name='children')
