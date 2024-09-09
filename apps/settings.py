@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "apps.child",
     "apps.recognition",
     "apps.parents",
-    "apps.therapists"
+    "apps.therapists",
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -73,7 +74,9 @@ WSGI_APPLICATION = "apps.wsgi.application"
 
 # Django REST Framework settings
 REST_FRAMEWORK = {
-    "UNAUTHENTICATED_USER": None,
+        'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
 
 # Database
