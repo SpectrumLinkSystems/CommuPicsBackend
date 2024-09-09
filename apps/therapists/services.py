@@ -47,3 +47,15 @@ def delete_therapist(therapist_id):
         return True
     except Therapist.DoesNotExist:
         return False
+
+def child_tracking(request, child_id):
+    child = Child.objects.get(id=child_id)
+    
+    if request.user.is_parent and child.parent != request.user.parent:
+        raise PermissionDenied
+    if request.user.is_therapist and not request.user.therapist.children.filter(id=child_id).exists():
+        raise PermissionDenied
+
+    pictogram_usages = child.pictogram_usages.all()
+
+    return render(request, 'child_tracking.html', {'child': child, 'pictogram_usages': pictogram_usages})

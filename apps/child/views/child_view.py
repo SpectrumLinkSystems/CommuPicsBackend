@@ -41,3 +41,4 @@ class ChildViewSet(viewsets.ModelViewSet):
         if delete_child_for_parent(parent_pk, pk):
             return Response({"message": "Child deleted"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"error": "Child or Parent not found"}, status=status.HTTP_404_NOT_FOUND)
+    

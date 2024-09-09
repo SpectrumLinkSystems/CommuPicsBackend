@@ -13,4 +13,5 @@ therapists_router.register(r'children', ChildViewSet, basename='therapist-childr
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(therapists_router.urls)),
+    path('therapists/<int:pk>/child_tracking/', TherapistViewSet.as_view({'post': 'child_tracking'}), name='child_tracking'),
 ]

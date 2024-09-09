@@ -51,3 +51,16 @@ class TherapistViewSet(viewsets.ViewSet):
             return Response({"message": "Therapist deleted"})
         else:
             return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    def child_tracking(self, request, *args, **kwargs):
+        therapist_id = self.kwargs.get('pk')
+        child_id = request.data.get('child_id')
+
+        therapist = get_object_or_404(Therapist, id=therapist_id)
+        child = get_object_or_404(Child, id=child_id)
+        if therapist not in child.therapists.all():
+            raise PermissionDenied("You do not have access to this child's data.")
+
+        pictogram_usages = PictogramUsage.objects.filter(child=child)
+        serializer = PictogramUsageSerializer(pictogram_usages, many=True)
+        return Response(serializer.data)
