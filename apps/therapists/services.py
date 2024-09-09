@@ -1,5 +1,6 @@
 # services.py
 from .models import Therapist
+from apps.child.models import Child
 
 def create_therapist(data):
     allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator']
@@ -10,6 +11,14 @@ def create_therapist(data):
 def get_all_therapists():
     return Therapist.objects.all()
 
+def assign_child_to_therapist(therapist_id, child_id):
+    try:
+        therapist = Therapist.objects.get(id=therapist_id)
+        child = Child.objects.get(id=child_id)
+        child.therapists.add(therapist)
+        return True
+    except (Therapist.DoesNotExist, Child.DoesNotExist):
+        return False
 
 def get_therapist_by_id(therapist_id):
     try:

@@ -16,6 +16,17 @@ class TherapistViewSet(viewsets.ViewSet):
         serializer = TherapistSerializer(therapists, many=True)
         return Response(serializer.data)
 
+    def assign_child(self, request, *args, **kwargs):
+        therapist_id = self.kwargs.get('pk')
+        child_id = request.data.get('child_id')
+
+        therapist = get_object_or_404(Therapist, id=therapist_id)
+        child = get_object_or_404(Child, id=child_id)
+
+        child.therapists.add(therapist)
+        
+        return Response({"message": f"Child {child.name} assigned to therapist {therapist.name}"}, status=status.HTTP_200_OK)
+
     def retrieve(self, request, *args, **kwargs):
         therapist_id = self.kwargs.get('pk')
         therapist = get_therapist_by_id(therapist_id)

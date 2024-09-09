@@ -7,3 +7,4 @@ class Child(models.Model):
     autism_level = models.IntegerField()
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     parent = models.ForeignKey('parents.Parent', on_delete=models.CASCADE, related_name='children')
+    therapists = models.ManyToManyField('therapists.Therapist', related_name='children_assigned')
