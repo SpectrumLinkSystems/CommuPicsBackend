@@ -19,8 +19,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -30,20 +30,21 @@ SECRET_KEY = "django-insecure-s(l4%*&^8_7+o9kdr)l)waz$7n^t0#y9u^ph)#-ony4$l2+j60
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.staticfiles",
     "adrf",
+    "drf_yasg",
     "cloudinary",
     "rest_framework",
     "apps.child",
     "apps.recognition",
     "apps.parents",
     "apps.therapists",
-    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -74,9 +75,8 @@ WSGI_APPLICATION = "apps.wsgi.application"
 
 # Django REST Framework settings
 REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
+    "UNAUTHENTICATED_USER": None,
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
 }
 
 # Database
@@ -117,5 +117,5 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
-    'UNAUTHENTICATED_USER': None,  # Configuración para usuarios no autenticados
+    "UNAUTHENTICATED_USER": None,  # Configuración para usuarios no autenticados
 }
