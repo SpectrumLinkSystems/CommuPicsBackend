@@ -1,7 +1,7 @@
 from .models import Parent
 
 def create_parent(data):
-    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator']
+    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator', 'firebase_id']
     filtered_data = {key: value for key, value in data.items() if key in allowed_fields}
     parent = Parent.objects.create(**filtered_data)
     return parent
@@ -14,6 +14,12 @@ def get_parent_by_id(parent_id):
     try:
         return Parent.objects.get(id=parent_id)
     except Parent.DoesNotExist:
+        return None
+
+def get_parent_by_firebase_id(firebase_id):
+    try:
+        return Parent.objects.get(firebase_id=firebase_id)
+    except Exception as e:
         return None
 
 def update_parent(parent_id, data):

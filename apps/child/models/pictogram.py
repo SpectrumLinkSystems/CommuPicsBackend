@@ -4,7 +4,7 @@ class Pictogram(models.Model):
     name = models.CharField(max_length=50)
     image_url = models.CharField(max_length=255)
     arasaac_id = models.CharField(max_length=50)
-    arasaac_categories=model.CharField(max_length=255)
+    arasaac_categories=models.CharField(max_length=255)
     subcollection = models.ForeignKey("SubCollection", on_delete=models.CASCADE)
 
 class PictogramUsage(models.Model):

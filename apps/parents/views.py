@@ -1,9 +1,12 @@
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
+from drf_yasg.utils import swagger_auto_schema
 from .models import Parent
 from .serializers import ParentSerializer
-from .services import (create_parent, get_all_parents, get_parent_by_id, update_parent, delete_parent)
+from .services import (create_parent, get_all_parents, get_parent_by_id, update_parent, delete_parent, get_parent_by_firebase_id)
 
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()
@@ -21,6 +24,18 @@ class ParentViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(parents, many=True)
         return Response(serializer.data)
 
+    @swagger_auto_schema(method='get', manual_parameters=['firebase_id'], response={200:""})
+    @api_view(['GET'])
+    def get_queryset(self, *args ,**kwargs):
+        firebase_id = self.request.query_params.get('firebase_id')
+        if not firebase_id:
+            return Response({"error": "firebase_id parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        parent = get_parent_by_firebase_id(firebase_id)
+        if parent:
+            return Response(status=status.HTTP_200_OK)
+        return Response({"error": "Parent not found"}, status=status.HTTP_404_NOT_FOUND)
+
     def retrieve(self, request, *args, **kwargs):
         parent_id = self.kwargs.get('pk')
         parent = get_parent_by_id(parent_id)
@@ -28,7 +43,7 @@ class ParentViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(parent)
             return Response(serializer.data)
         return Response({"error": "Parent not found"}, status=status.HTTP_404_NOT_FOUND)
-
+    
     def update(self, request, *args, **kwargs):
         parent_id = self.kwargs.get('pk')
         parent = update_parent(parent_id, request.data)

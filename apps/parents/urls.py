@@ -15,4 +15,5 @@ parents_router.register(r'children', ChildViewSet, basename='parent-children')
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(parents_router.urls)),
+    # path('parents/firebase_id', ParentViewSet.as_view({'get': 'get_by_firebase_id'}), name='get_by_firebase_id'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
