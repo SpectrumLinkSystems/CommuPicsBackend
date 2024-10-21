@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -38,9 +39,9 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "adrf",
-    "drf_yasg",
     "cloudinary",
     "rest_framework",
+    "drf_spectacular",
     "apps.child",
     "apps.recognition",
     "apps.parents",
@@ -76,7 +77,15 @@ WSGI_APPLICATION = "apps.wsgi.application"
 # Django REST Framework settings
 REST_FRAMEWORK = {
     "UNAUTHENTICATED_USER": None,
-    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.NamespaceVersioning",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "CommuPics API",
+    "DESCRIPTION": "CommuPics's REST API",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 # Database
@@ -115,7 +124,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-REST_FRAMEWORK = {
-    "UNAUTHENTICATED_USER": None,  # Configuración para usuarios no autenticados
-}
