@@ -1,9 +1,11 @@
 from django.db import models
 
+
 class Parent(models.Model):
+    objects = models.Manager()
     DOCUMENT_TYPE_CHOICES = [
-        ('DNI', 'DNI'),
-        ('PASSPORT', 'Passport'),
+        ("DNI", "DNI"),
+        ("PASSPORT", "Passport"),
     ]
 
     name = models.CharField(max_length=100)
@@ -16,4 +18,4 @@ class Parent(models.Model):
     firebase_id = models.CharField(max_length=30)
 
     def __str__(self):
-        return f'{self.name} {self.last_name}'
+        return f"{self.name} {self.last_name}"

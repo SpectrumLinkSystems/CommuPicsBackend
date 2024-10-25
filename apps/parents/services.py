@@ -1,7 +1,19 @@
+from django.db.models import ObjectDoesNotExist
+
 from .models import Parent
 
+
 def create_parent(data):
-    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator', 'firebase_id']
+    allowed_fields = [
+        "name",
+        "last_name",
+        "document_type",
+        "document_number",
+        "date_of_birth",
+        "document_front_validator",
+        "document_back_validator",
+        "firebase_id",
+    ]
     filtered_data = {key: value for key, value in data.items() if key in allowed_fields}
     parent = Parent.objects.create(**filtered_data)
     return parent
@@ -10,34 +22,47 @@ def create_parent(data):
 def get_all_parents():
     return Parent.objects.all()
 
+
 def get_parent_by_id(parent_id):
     try:
-        return Parent.objects.get(id=parent_id)
-    except Parent.DoesNotExist:
+        parent = Parent.objects.get(id=parent_id)
+        return parent
+    except ObjectDoesNotExist:
         return None
+
 
 def get_parent_by_firebase_id(firebase_id):
     try:
         return Parent.objects.get(firebase_id=firebase_id)
-    except Exception as e:
+    except ObjectDoesNotExist:
         return None
+
 
 def update_parent(parent_id, data):
     try:
         parent = Parent.objects.get(id=parent_id)
-        allowed_fields = ['name', 'last_name', 'document_type', 'document_number', 'date_of_birth', 'document_front_validator', 'document_back_validator']
+        allowed_fields = [
+            "name",
+            "last_name",
+            "document_type",
+            "document_number",
+            "date_of_birth",
+            "document_front_validator",
+            "document_back_validator",
+        ]
         for key, value in data.items():
             if key in allowed_fields:
                 setattr(parent, key, value)
         parent.save()
         return parent
-    except Parent.DoesNotExist:
+    except ObjectDoesNotExist:
         return None
+
 
 def delete_parent(parent_id):
     try:
         parent = Parent.objects.get(id=parent_id)
         parent.delete()
         return True
-    except Parent.DoesNotExist:
+    except ObjectDoesNotExist:
         return False
