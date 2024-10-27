@@ -5,9 +5,7 @@ from rest_framework.response import Response
 
 from apps.child.models.pictogram import Pictogram
 from apps.child.serializers.pictogram_serializer import (
-    CreatePictogramSerializer,
-    PictogramSerializer,
-)
+    CreatePictogramSerializer, PictogramSerializer)
 from apps.child.services.pictogram_service import PictogramService
 
 
