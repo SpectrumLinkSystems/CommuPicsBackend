@@ -11,8 +11,13 @@ from apps.child.serializers.collection_serializer import CollectionSerializer
 
 
 class ChildViewSet(viewsets.ModelViewSet):
-    queryset = Child.objects.all()
     serializer_class = ChildSerializer
+
+    def get_queryset(self):
+        parent_id = self.kwargs.get("parent_pk")
+        if parent_id:
+            return Child.objects.filter(parent_id=parent_id)
+        return Child.objects.all()
 
     @extend_schema(
         responses={200: CollectionSerializer(many=True)},
