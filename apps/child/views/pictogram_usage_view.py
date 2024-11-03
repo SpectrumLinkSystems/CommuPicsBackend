@@ -27,3 +27,17 @@ class PictogramUsageView(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except ValueError as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['get'], url_path='child/(?P<child_id>[^/.]+)')
+    def history_by_child(self, request, child_id=None):
+        pictogram_usage = PictogramUsage.objects.filter(child_id=child_id)
+        
+        if not pictogram_usage.exists():
+            return Response(
+                {"detail": "No se encontró historial de uso para el niño especificado."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Serializar y devolver los datos
+        serializer = self.get_serializer(pictogram_usage, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)  
