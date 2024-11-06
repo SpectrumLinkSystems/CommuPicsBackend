@@ -14,7 +14,7 @@ from apps.child.services.pictogram_service import PictogramService
 class RecomendationView(viewsets.ModelViewSet):
     serializer_class = PictogramUsageSerializer
 
-    @action(detail=False, methods=['get'], url_path='recommendations/(?P<child_id>[^/.]+)/(?P<pictogram_id>[^/.]+)')
+    @action(detail=False, methods=['get'], url_path='(?P<child_id>[^/.]+)/(?P<pictogram_id>[^/.]+)')
     def recommendations_for_pictogram(self, request, child_id=None, pictogram_id=None):
         if not pictogram_id:
             return Response(
