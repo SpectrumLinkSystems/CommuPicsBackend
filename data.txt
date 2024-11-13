@@ -1,0 +1,66 @@
+-- Insertar datos para Parent
+INSERT INTO Parent (name, last_name, document_type, document_number, date_of_birth, document_front_validator, document_back_validator, firebase_id)
+VALUES 
+('Juan', 'Pérez', 'DNI', '12345678', '1980-01-01', TRUE, TRUE, 'UT9EHLJVcTdf7zRx2sl5Fk6kL9V2'),
+('Ana', 'Gómez', 'PASSPORT', '87654321', '1985-02-02', FALSE, FALSE, 'EGLqk50yTMVZOBw9RSFK34dDk2n2');
+
+-- Insertar datos para Child asociado a cada Parent
+INSERT INTO Child (name, last_name, birth_date, autism_level, avatar, parent_id, therapists_id)
+VALUES 
+('Lucía', 'Pérez', '2010-01-01', 2, 'assets/images/profiles/jaguar.png', 1, NULL),
+('Carlos', 'Gómez', '2012-02-02', 3, 'assets/images/profiles/wolf.png', 2, NULL);
+
+-- Insertar datos para Collection asociado a cada Child
+INSERT INTO Collection (name, image_url, child_id)
+VALUES 
+('Animales', 'https://static.arasaac.org/pictograms/6901/6901_2500.png', 1),
+('Colores', 'https://static.arasaac.org/pictograms/5968/5968_2500.png', 1),
+('Formas', 'https://static.arasaac.org/pictograms/4651/4651_2500.png', 1),
+('Números', 'https://static.arasaac.org/pictograms/2879/2879_2500.png', 2),
+('Letras', 'https://static.arasaac.org/pictograms/34361/34361_2500.png', 2),
+('Frutas', 'https://static.arasaac.org/pictograms/28339/28339_2500.png', 2);
+
+-- Insertar datos para Pictogram asociado a cada Collection
+INSERT INTO Pictogram (name, image_url, arasaac_id, arasaac_categories, collection_id)
+VALUES 
+-- Pictogramas para Collection 1 (Animales)
+('Gato', 'https://static.arasaac.org/pictograms/7114/7114_2500.png', '7114', 'Animal', 1),
+('Perro', 'https://static.arasaac.org/pictograms/7202/7202_2500.png', '7202', 'Animal', 1),
+('Pájaro', 'https://static.arasaac.org/pictograms/2490/2490_2500.png', '2490', 'Animal', 1),
+('Pez', 'https://static.arasaac.org/pictograms/2520/2520_2500.png', '2520', 'Animal', 1),
+('Caballo', 'https://static.arasaac.org/pictograms/2294/2294_2500.png', '2294', 'Animal', 1),
+
+-- Pictogramas para Collection 2 (Colores)
+('Rojo', 'https://static.arasaac.org/pictograms/2808/2808_2500.png', '2808', 'Color', 2),
+('Azul', 'https://static.arasaac.org/pictograms/4869/4869_2500.png', '4869', 'Color', 2),
+('Verde', 'https://static.arasaac.org/pictograms/4887/4887_2500.png', '4887', 'Color', 2),
+('Amarillo', 'https://static.arasaac.org/pictograms/2648/2648_2500.png', '2648', 'Color', 2),
+('Morado', 'https://static.arasaac.org/pictograms/2907/2907_2500.png', '2907', 'Color', 2),
+
+-- Pictogramas para Collection 3 (Formas)
+('Círculo', 'https://static.arasaac.org/pictograms/4603/4603_2500.png', '4603', 'Forma', 3),
+('Cuadrado', 'https://static.arasaac.org/pictograms/4616/4616_2500.png', '4616', 'Forma', 3),
+('Triángulo', 'https://static.arasaac.org/pictograms/2604/2604_2500.png', '2604', 'Forma', 3),
+('Rectángulo', 'https://static.arasaac.org/pictograms/4731/4731_2500.png', '4731', 'Forma', 3),
+('Óvalo', 'https://static.arasaac.org/pictograms/4711/4711_2500.png', '4711', 'Forma', 3),
+
+-- Pictogramas para Collection 4 (Números)
+('Uno', 'https://static.arasaac.org/pictograms/2627/2627_2500.png', '2627', 'Número', 4),
+('Dos', 'https://static.arasaac.org/pictograms/2628/2628_2500.png', '2628', 'Número', 4),
+('Tres', 'https://static.arasaac.org/pictograms/2629/2629_2500.png', '2629', 'Número', 4),
+('Cuatro', 'https://static.arasaac.org/pictograms/2630/2630_2500.png', '2630', 'Número', 4),
+('Cinco', 'https://static.arasaac.org/pictograms/2631/2631_2500.png', '2631', 'Número', 4),
+
+-- Pictogramas para Collection 5 (Letras)
+('A', 'https://static.arasaac.org/pictograms/3021/3021_2500.png', '3021', 'Letra', 5),
+('B', 'https://static.arasaac.org/pictograms/4603/4603_2500.png', '4603', 'Letra', 5),
+('C', 'https://static.arasaac.org/pictograms/3024/3024_2500.png', '3024', 'Letra', 5),
+('D', 'https://static.arasaac.org/pictograms/3025/3025_2500.png', '3025', 'Letra', 5),
+('E', 'https://static.arasaac.org/pictograms/3026/3026_2500.png', '3026', 'Letra', 5),
+
+-- Pictogramas para Collection 6 (Frutas)
+('Manzana', 'https://static.arasaac.org/pictograms/2462/2462_2500.png', '2462', 'Fruta', 6),
+('Banana', 'https://static.arasaac.org/pictograms/10218/10218_2500.png', '10218', 'Fruta', 6),
+('Uvas', 'https://static.arasaac.org/pictograms/3247/3247_2500.png', '3247', 'Fruta', 6),
+('Naranja', 'https://static.arasaac.org/pictograms/2888/2888_2500.png', '2888', 'Fruta', 6),
+('Pera', 'https://static.arasaac.org/pictograms/2561/2561_2500.png', '2561', 'Fruta', 6);

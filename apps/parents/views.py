@@ -1,15 +1,15 @@
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import status, viewsets
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from .models import Parent
+from apps.parents.models import Parent
+
 from .serializers import ParentSerializer
 from .services import (create_parent, delete_parent, get_all_parents,
                        get_parent_by_firebase_id, get_parent_by_id,
                        update_parent)
-
 
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()

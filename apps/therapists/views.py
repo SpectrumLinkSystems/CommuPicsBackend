@@ -1,15 +1,21 @@
-from rest_framework import viewsets
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
+from rest_framework import viewsets, status
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from rest_framework import status
+
 from .models import Therapist
 from .serializers import TherapistSerializer
-from .services import create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist
+from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id)
 
-class TherapistViewSet(viewsets.ViewSet):
+class TherapistViewSet(viewsets.ModelViewSet):
+    queryset = Therapist.objects.all()
+    serializer_class = TherapistSerializer
+
     def create(self, request, *args, **kwargs):
         therapist = create_therapist(request.data)
         serializer = TherapistSerializer(therapist)
-        return Response({"message": "Therapist created", "therapist": serializer.data}, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def list(self, request, *args, **kwargs):
         therapists = get_all_therapists()
@@ -64,3 +70,29 @@ class TherapistViewSet(viewsets.ViewSet):
         pictogram_usages = PictogramUsage.objects.filter(child=child)
         serializer = PictogramUsageSerializer(pictogram_usages, many=True)
         return Response(serializer.data)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "firebase_id",
+                OpenApiTypes.STR,
+                OpenApiParameter.QUERY,
+            )
+        ]
+    )
+    @action(detail=False, methods=["get"])
+    def get_therapist_by_firebase_id(self, request):
+        firebase_id = request.query_params.get("firebase_id", None)
+        if not firebase_id:
+            return Response(
+                {"error": "firebase_id parameter is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        therapist = get_therapist_by_firebase_id(firebase_id)
+        if therapist:
+            serializer = self.get_serializer(therapist)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+
+

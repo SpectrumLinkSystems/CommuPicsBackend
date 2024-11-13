@@ -1,6 +1,7 @@
-# services.py
 from .models import Therapist
 from apps.child.models import Child
+
+from django.db.models import ObjectDoesNotExist
 
 def create_therapist(data):
     allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator']
@@ -59,3 +60,9 @@ def child_tracking(request, child_id):
     pictogram_usages = child.pictogram_usages.all()
 
     return render(request, 'child_tracking.html', {'child': child, 'pictogram_usages': pictogram_usages})
+
+def get_therapist_by_firebase_id(firebase_id):
+    try:
+        return Therapist.objects.get(firebase_id=firebase_id)
+    except ObjectDoesNotExist:
+        return None
