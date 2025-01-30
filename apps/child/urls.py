@@ -18,3 +18,4 @@ router.register(r"recomendation", RecomendationView, basename="recomendation")
 urlpatterns = [
     path("", include(router.urls)),
 ]
+
