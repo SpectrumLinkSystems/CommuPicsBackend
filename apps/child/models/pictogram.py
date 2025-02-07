@@ -19,7 +19,7 @@ class PictogramUsage(models.Model):
     cant_used = models.IntegerField(default=1)
     
     class Meta:
-        # Añadir un índice único para evitar duplicados
+
         unique_together = ['child', 'pictogram']
 
     def __str__(self):

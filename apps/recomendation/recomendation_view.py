@@ -22,10 +22,8 @@ class RecomendationView(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # Llamar al servicio de recomendaciones con ambos parámetros
         recommendations = get_pictogram_recommendations(child_id, pictogram_id)
 
-        # Verificar si hubo algún error en la recomendación
         if "error" in recommendations:
             return Response(
                 {"detail": recommendations["error"]},
