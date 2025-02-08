@@ -92,3 +92,16 @@ def count_children(parent_id):
         return Child.objects.filter(parent=parent).count()
     except ObjectDoesNotExist:
         return 0
+
+def update_autism_level(parent_id, child_id, new_autism_level):
+    try:
+        parent = Parent.objects.get(id=parent_id)
+        child = Child.objects.get(parent_id=parent, id=child_id)
+
+        child.autism_level = new_autism_level
+        child.save()
+
+        return child
+
+    except ObjectDoesNotExist:
+        return None

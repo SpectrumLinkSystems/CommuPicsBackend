@@ -24,6 +24,18 @@ class CollectionView(viewsets.ModelViewSet):
         detail=False, methods=["get"], url_path="(?P<collection_id>[^/.]+)/pictograms"
     )
     def get_pictograms_by_collection_id(self, request, collection_id):
-        collections = Pictogram.objects.filter(collection_id=collection_id)
-        serializer = PictogramSerializer(collections, many=True)
-        return Response(serializer.data)
+        try:
+            collection = Collection.objects.get(id=collection_id)
+            child = collection.child_id
+
+            pictograms = Pictogram.objects.filter(collection_id=collection)
+
+            # Aplicar filtro según el nivel de autismo
+            if child.autism_level == 1:
+                pictograms = pictograms.filter(arasaac_categories__icontains="core vocabulary")
+
+            serializer = PictogramSerializer(pictograms, many=True)
+            return Response(serializer.data)
+
+        except Collection.DoesNotExist:
+            return Response({"error": "Collection not found"}, status=404)
