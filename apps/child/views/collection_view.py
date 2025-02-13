@@ -30,9 +30,9 @@ class CollectionView(viewsets.ModelViewSet):
 
             pictograms = Pictogram.objects.filter(collection_id=collection)
 
-            # Aplicar filtro según el nivel de autismo
-            if child.autism_level == 1:
-                pictograms = pictograms.filter(arasaac_categories__icontains="core vocabulary")
+            # # Aplicar filtro según el nivel de autismo
+            # if child.autism_level == 1:
+            #     pictograms = pictograms.filter(arasaac_categories__icontains="core vocabulary")
 
             serializer = PictogramSerializer(pictograms, many=True)
             return Response(serializer.data)

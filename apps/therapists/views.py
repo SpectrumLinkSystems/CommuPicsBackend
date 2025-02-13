@@ -1,12 +1,17 @@
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets, status
-from rest_framework.decorators import action, api_view
+from rest_framework.parsers import MultiPartParser
+from rest_framework.decorators import action, api_view, parser_classes
 from rest_framework.response import Response
+from pyzbar.pyzbar import decode
+from PIL import Image
+import cv2
+import numpy as np
 
 from .models import Therapist
 from .serializers import TherapistSerializer
-from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id)
+from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id, escanear_qr)
 
 class TherapistViewSet(viewsets.ModelViewSet):
     queryset = Therapist.objects.all()
@@ -95,4 +100,34 @@ class TherapistViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
 
+    @extend_schema(
+        responses={200: {"type": "object", "properties": {"id_nino": {"type": "string"}}}},
+    )
+    @action(detail=False, methods=["get"])
+    def escanear_qr_camara(self, request):
+        """Escanea un código QR en tiempo real usando la cámara."""
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Evita errores en Windows
 
+        if not cap.isOpened():
+            return Response({"error": "No se pudo acceder a la cámara"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        detector = cv2.QRCodeDetector()
+
+        try:
+            while True:
+                ret, frame = cap.read()
+                if not ret:
+                    break
+
+                data, _, _ = detector.detectAndDecode(frame)
+                if data:
+                    return Response({"id_nino": data}, status=status.HTTP_200_OK)
+
+                cv2.imshow("Escanear QR", frame)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+        finally:
+            cap.release()
+            cv2.destroyAllWindows()
+
+        return Response({"error": "No se detectó un código QR"}, status=status.HTTP_400_BAD_REQUEST)

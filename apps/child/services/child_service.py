@@ -4,6 +4,12 @@ from apps.child.models import Child
 from apps.parents.models import Parent
 from apps.child.models import Collection, Pictogram
 from .default_collections import DEFAULT_COLLECTIONS
+import qrcode
+from io import BytesIO
+import base64
+from pyzbar.pyzbar import decode
+from PIL import Image
+import cv2
 
 
 def create_child_for_parent(parent_id, child_data):
@@ -105,3 +111,31 @@ def update_autism_level(parent_id, child_id, new_autism_level):
 
     except ObjectDoesNotExist:
         return None
+
+def generar_qr(id_nino, nombre_archivo="qr_nino.png"):
+    try:
+        # Verifica si el niño existe
+        child = Child.objects.get(id=id_nino)
+    except ObjectDoesNotExist:
+        return {"error": "El niño con el ID proporcionado no existe."}
+
+    # Genera el QR
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(str(id_nino))  # Se asegura de que sea un string
+    qr.make(fit=True)
+    img = qr.make_image(fill='black', back_color='white')
+
+    # Guarda la imagen en un buffer en memoria
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+    # Guarda el QR como archivo si es necesario
+    img.save(nombre_archivo)
+
+    return {"qr_code": img_base64, "message": f"QR generado para el niño {child.name}."}

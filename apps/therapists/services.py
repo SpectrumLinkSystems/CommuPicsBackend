@@ -1,5 +1,9 @@
 from .models import Therapist
 from apps.child.models import Child
+import qrcode
+from pyzbar.pyzbar import decode
+from PIL import Image
+import cv2
 
 from django.db.models import ObjectDoesNotExist
 
@@ -66,3 +70,22 @@ def get_therapist_by_firebase_id(firebase_id):
         return Therapist.objects.get(firebase_id=firebase_id)
     except ObjectDoesNotExist:
         return None
+
+def escanear_qr():
+    cap = cv2.VideoCapture(0)
+    detector = cv2.QRCodeDetector()
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        data, bbox, _ = detector.detectAndDecode(frame)
+        if data:
+            cap.release()
+            cv2.destroyAllWindows()
+            return {"id_nino": data}
+
+    cap.release()
+    cv2.destroyAllWindows()
+    return {"error": "No se detectó ningún QR"}

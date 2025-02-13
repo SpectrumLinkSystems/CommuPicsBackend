@@ -4,12 +4,15 @@ from rest_framework import request, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+import qrcode
+from io import BytesIO
+import base64
 
 from apps.child.models.child import Child
 from apps.child.models.collection import Collection
 from apps.child.serializers.child_serializer import ChildSerializer
 from apps.child.serializers.collection_serializer import CollectionSerializer
-from apps.child.services.child_service import create_child_for_parent, get_children_by_parent, get_child_by_parent, update_child_for_parent, delete_child_for_parent, update_autism_level;
+from apps.child.services.child_service import create_child_for_parent, get_children_by_parent, get_child_by_parent, update_child_for_parent, delete_child_for_parent, update_autism_level, generar_qr;
 
 class ChildViewSet(viewsets.ModelViewSet):
     serializer_class = ChildSerializer
@@ -77,3 +80,31 @@ class ChildViewSet(viewsets.ModelViewSet):
 
         serializer = ChildSerializer(child)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="child_id",
+                type=OpenApiTypes.STR,
+                location=OpenApiParameter.QUERY,
+                description="ID del niño para generar el QR"
+            )
+        ],
+        responses={200: {"type": "object", "properties": {"qr_code": {"type": "string"}, "message": {"type": "string"}}}},
+    )
+    @action(detail=False, methods=["get"], url_path="generar-qr")
+    def generar_qr_action(self, request):
+        child_id = request.query_params.get("child_id")
+
+        if not child_id:
+            return Response(
+                {"error": "El parámetro 'child_id' es requerido."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        qr_response = generar_qr(child_id)
+
+        if "error" in qr_response:
+            return Response(qr_response, status=status.HTTP_404_NOT_FOUND)
+
+        return Response(qr_response, status=status.HTTP_200_OK)
