@@ -13,8 +13,8 @@ class Parent(models.Model):
     document_type = models.CharField(max_length=10, choices=DOCUMENT_TYPE_CHOICES)
     document_number = models.CharField(max_length=20)
     date_of_birth = models.DateField()
-    document_front_validator = models.BooleanField(default=False)
-    document_back_validator = models.BooleanField(default=False)
+    document_front_validator = models.BooleanField(null=True, blank=True, default=False)
+    document_back_validator = models.BooleanField(null=True, blank=True, default=False)
     firebase_id = models.CharField(max_length=30)
 
     def __str__(self):
