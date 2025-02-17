@@ -5,13 +5,8 @@ import httpx
 
 
 class ImageRecognitionService:
-    async def recognize_image(self, image_url):
+    async def recognize_image(self, image_url, collections):
         load_dotenv()
-        collections = [
-            {"Animales": ["Mamíferos", "Aves", "Reptiles"]},
-            {"Objetos": ["Juguetes", "Electrónica", "Ropa"]},
-            {"Lugares": ["Parques", "Ciudades", "Montañas"]},
-        ]
 
         headers = {
             "Content-Type": "application/json",
@@ -24,7 +19,7 @@ class ImageRecognitionService:
                 {
                     "role": "user",
                     "content": [
-                        {"type": "text", "text": "¿Qué hay en esta imagen?"},
+                        {"type": "text", "text": "A partir de este momento serás un especialista en autismo que ayudará a un niño a determinar que objeto representa la siguiente imagen con el fin de que este niño pueda agregar un pictograma a su cuaderno PECS"},
                         {
                             "type": "image_url",
                             "image_url": {
@@ -34,25 +29,27 @@ class ImageRecognitionService:
                         },
                         {
                             "type": "text",
-                            "text": """
-                            Proporciona un nombre apropiado en español para buscar en la API de Arasaac y sugiere posibles colecciones y subcolecciones familiares a las que podría pertenecer, considerando que las categorías deberían ser fácilmente reconocibles para niños autistas de 5 a 12 años. 
-                            No utilices términos genéricos como "Objeto". Si no encuentras una categoría adecuada, sugiere una nueva categoría que sea específica y familiar, como "Herramientas" para un destornillador, "Tecnología" para un ratón de computadora, etc.
-                            La respuesta debe estar en formato JSON con la siguiente estructura:
+                            "text": f"El niño cuenta con las siguientes colecciones: {json.dumps(collections, indent=4)}" + """ \n
+                            Necesito que escojas la o las colecciones a las que el objeto reconocido pueda ingresar.
+                            En el caso de que el objeto no pueda ingresar en ninguna de las colecciones existentes, recomendarás nuevas colecciones.
+                            Quiero que la respuesta a esto SOLO sea un json que conserve la estructura de una colección existente.
+                            Sin embargo quiero que tambien crees un campo extra para las nuevas colecciones que recomiendes como una coleccion de Strings.
+                            En otras palabras necesito esto de respuesta: \n
                             {
-                            "name": {PALABRA QUE REPRESENTA LA IMAGEN},
-                            "optional_categories": [
-                                {
-                                "name": {NOMBRE DE LA POSIBLE CATEGORIA},
-                                "optional_subcategories": [
+                                recomendations: [
                                     {
-                                    "name": {NOMBRE DE LA SUBCATEGORIA}
-                                    }
-                                ]
+                                        "id": "ID DE LA COLECCION",
+                                        "name": "NOMBRE DE LA COLECCION",
+                                        "image_url": "URL DE COLECCION",
+                                        "child_id": "ID DEL NIÑO AL QUE LE PERTENECE LA COLECCION",
+                                    },
+                                ],
+                                new_collections: ["CADA COLECCION NUEVA QUE RECOMIENDES"],
+                                results: {
+                                    "name": "NOMBRE DEL OBJETO RECONOCIDO"
                                 }
-                            ]
                             }
-                            Lista de colecciones y subcolecciones existentes: {colecciones if colecciones else 'No hay colecciones disponibles, sugiere nuevas.'}
-                            """,
+                            """
                         },
                     ],
                 }

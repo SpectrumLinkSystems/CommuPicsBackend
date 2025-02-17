@@ -1,6 +1,8 @@
-from django.db.models import ObjectDoesNotExist
+from typing import List, Any
+
+from django.db.models import ObjectDoesNotExist, QuerySet
 from django.db import transaction
-from apps.child.models import Child
+from apps.child.models import Child, Collection
 from apps.parents.models import Parent
 from apps.child.models import Collection, Pictogram
 from .default_collections import DEFAULT_COLLECTIONS
@@ -15,7 +17,7 @@ import cv2
 def create_child_for_parent(parent_id, child_data):
     try:
         parent = Parent.objects.get(id=parent_id)
-        
+
         allowed_fields = [
             "name",
             "last_name",
@@ -23,12 +25,12 @@ def create_child_for_parent(parent_id, child_data):
             "autism_level",
             "avatar",
         ]
-        
+
         filtered_data = {
             key: value for key, value in child_data.items() if key in allowed_fields
         }
-        
-        with transaction.atomic(): 
+
+        with transaction.atomic():
 
             child = Child.objects.create(parent_id=parent, **filtered_data)
 
@@ -51,6 +53,7 @@ def create_child_for_parent(parent_id, child_data):
 
     except ObjectDoesNotExist:
         return None
+
 
 def get_children_by_parent(parent_id):
     try:
@@ -99,6 +102,7 @@ def count_children(parent_id):
     except ObjectDoesNotExist:
         return 0
 
+
 def update_autism_level(parent_id, child_id, new_autism_level):
     try:
         parent = Parent.objects.get(id=parent_id)
@@ -111,6 +115,15 @@ def update_autism_level(parent_id, child_id, new_autism_level):
 
     except ObjectDoesNotExist:
         return None
+
+
+def get_child_collections(child_id):
+    try:
+        collections = Collection.objects.filter(child_id=child_id)
+        return collections
+    except ObjectDoesNotExist:
+        return Collection.objects.none()
+
 
 def generar_qr(id_nino, nombre_archivo="qr_nino.png"):
     try:

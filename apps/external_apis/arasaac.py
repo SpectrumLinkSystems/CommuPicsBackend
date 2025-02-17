@@ -21,8 +21,14 @@ class ArasaacService:
 
     @staticmethod
     async def search_pictograms_by_word(word):
-        url = f'{ArasaacService.SEARCH_URL}search/{word}'
+        url = f'{ArasaacService.BASE_URL}search/{word}'
         async with httpx.AsyncClient() as client:
             response = await client.get(url)
             response.raise_for_status()
             return response.json()
+
+    @staticmethod
+    async def get_pictogram_id(json_data):
+        first_object = json_data[0]
+        got_id = first_object['_id']
+        return got_id

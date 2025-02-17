@@ -7,7 +7,8 @@ from apps.child.models.child import Child
 from apps.child.models.collection import Collection
 from apps.child.models.pictogram import PictogramUsage
 from apps.child.serializers.pictogram_serializer import \
-    CreatePictogramSerializer
+    CreatePictogramSerializer, CreateManyPictogramsSerializer
+from apps.external_apis.arasaac import ArasaacService
 
 
 class PictogramService:
@@ -63,3 +64,21 @@ class PictogramService:
             raise ValueError("Pictogram does not exist")
         except Exception as e:
             raise ValueError(f"Error registering pictogram usage: {str(e)}")
+
+
+def create_many_pictograms(pictogram_data: CreateManyPictogramsSerializer):
+    try:
+        Pictogram.objects.bulk_create([
+            Pictogram(
+                name=pictogram_data["name"].value,
+                image_url=pictogram_data["image_url"].value,
+                arasaac_id=pictogram_data["arasaac_id"].value,
+                arasaac_categories=pictogram_data["arasaac_categories"].value,
+                collection_id=Collection(id=collection_id),
+            ) for collection_id in pictogram_data["collection_ids"].value
+        ])
+    except ObjectDoesNotExist:
+        raise ValueError("Collections does not exist")
+
+    # json_data = await ArasaacService.search_pictograms_by_word(name)
+    # pictogram_id = await ArasaacService.get_pictogram_id(json_data)
