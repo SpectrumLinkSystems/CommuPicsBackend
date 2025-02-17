@@ -1,26 +1,37 @@
 from adrf.views import APIView
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.response import Response
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
-from apps.child.serializers.collection_serializer import CollectionSerializer
+from apps.child.services import child_service
 from apps.external_apis.image_recognotion_service import ImageRecognitionService
 from apps.images_storage.cloudinary_service import CloudinaryService
 from apps.recognition.serializers import RecognotionSerializer
-from apps.child.services.child_service import  get_child_collections
 
 class RecognitionView(APIView):
     def __init__(self):
         self.cloudinary_service = CloudinaryService()
         self.image_recognition_service = ImageRecognitionService()
 
-    def post(self, request):
-        serializer = RecognotionSerializer(data=request.data)
-        collections = get_child_collections(1)
-        collection_serializer = CollectionSerializer(collections, many=True)
+    @extend_schema(
+            parameters=[
+                OpenApiParameter("child_id", OpenApiTypes.STR, OpenApiParameter.PATH)
+            ]
+    )
+    @action(
+        detail=False, methods=["post"], url_path="recognize"
+    )
+    async def post(self, request):
+        # collections = child_service.get_collections_by_child_id(request.user.child.id)
+        collections = child_service.get_collections_by_child_id(1)
+        # serializer = RecognotionSerializer("")
+        # serializer = RecognotionSerializer(data=request.data)
         # if not serializer.is_valid():
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        # recognition_response = await self.image_recognition_service.recognize_image(request.data["image"])
+        recognition_response = await self.image_recognition_service.recognize_image("", collections)
+        # recognition_response = await self.image_recognition_service.recognize_image(request.data["image"], collections)
+        return Response(recognition_response, status=status.HTTP_200_OK)
         # recognition_response["url_image"] = request.data["image"]
-        recognition_response = self.image_recognition_service.recognize_image("https://unycos.com/cdn/shop/articles/La_importancia_de_la_relajacion_para_tocar_la_guitarra_1.jpg?v=1717643502", collections)
-        return Response(recognition_response
-                        , status=status.HTTP_201_CREATED)
+        # return Response(recognition_response, status=status.HTTP_201_CREATED)
