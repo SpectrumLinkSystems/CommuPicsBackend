@@ -7,9 +7,9 @@ from apps.child.models.pictogram import Pictogram, PictogramUsage
 from datetime import datetime
 
 def get_pictogram_recommendations(child_id, selected_pictogram_id):
+
     selected_pictogram = Pictogram.objects.get(id=selected_pictogram_id)
     
-    pictograms = Pictogram.objects.all()
     pictogram_usage = PictogramUsage.objects.filter(child_id=child_id).select_related('pictogram')
     
     used_pictograms = []
@@ -22,7 +22,8 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
             'pictogram': pictogram
         })
     
-    # Agregar pictogramas que el niño tiene por defecto (cantidad de uso = 0)
+    all_pictograms = Pictogram.objects.all()
+    
     default_pictograms = [
         {
             'name': pic.name,
@@ -30,7 +31,7 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
             'cant_used': 0,
             'pictogram': pic
         }
-        for pic in pictograms if pic.id not in [u['pictogram'].id for u in used_pictograms]
+        for pic in all_pictograms if pic.id not in [u['pictogram'].id for u in used_pictograms]
     ]
     
     all_pictograms = used_pictograms + default_pictograms
@@ -50,18 +51,30 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
     tfidf_matrix = vectorizer.fit_transform([pic['arasaac_categories'] for pic in relevant_pictograms])
     
     similarity_matrix = cosine_similarity(tfidf_matrix)
-    
-    selected_idx = next((i for i, pic in enumerate(relevant_pictograms) if pic['pictogram'] == selected_pictogram), None)
+
+    selected_idx = next((i for i, pic in enumerate(relevant_pictograms) if pic['pictogram'].id == selected_pictogram_id), None)
+
     selected_idx = selected_idx if selected_idx is not None else 0
-    
+
     sim_scores = list(enumerate(similarity_matrix[selected_idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     
-    similar_pictograms = [relevant_pictograms[i[0]] for i in sim_scores[1:6]]
+
+    weighted_scores = []
+    for idx, score in sim_scores:
+        pictogram = relevant_pictograms[idx]
+        weighted_score = score * (1 + pictogram['cant_used'] / 100) 
+        weighted_scores.append((idx, weighted_score))
     
-    popular_pictograms = sorted(similar_pictograms, key=lambda x: x['cant_used'], reverse=True)
+    weighted_scores = sorted(weighted_scores, key=lambda x: x[1], reverse=True)
     
-    random.shuffle(popular_pictograms)
+    top_pictograms = []
+    for idx, _ in weighted_scores:
+        pictogram = relevant_pictograms[idx]
+        if pictogram['pictogram'].id != selected_pictogram_id and pictogram not in top_pictograms:
+            top_pictograms.append(pictogram)
+        if len(top_pictograms) >= 6:
+            break
     
     recommendations = [
         {
@@ -77,7 +90,7 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
             "date_used": datetime.now().isoformat(),
             "cant_used": pic['cant_used']
         }
-        for pic in popular_pictograms[:6]
+        for pic in top_pictograms
     ]
     
     return {"recomendaciones": recommendations}

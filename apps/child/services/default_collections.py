@@ -4,7 +4,7 @@ DEFAULT_COLLECTIONS = [
         'name': 'Alimentos',
         'image_url': 'https://static.arasaac.org/pictograms/4610/4610_2500.png',
         'pictograms': [
-            {'name': 'Tomate', 'image_url': 'https://static.arasaac.org/pictograms/2594/2594_2500.png', 'arasaac_id': '2594', 'arasaac_categories': 'feeding, food, plant-based food, vegetable, core vocabulary'},
+            {'name': 'Tomate', 'image_url': 'https://static.arasaac.org/pictograms/2594/2594_2500.png', 'arasaac_id': '2594', 'arasaac_categories': 'feeding,food,plant-based food,vegetable,core vocabulary'},
             {'name': 'Pollo', 'image_url': 'https://static.arasaac.org/pictograms/4952/4952_2500.png', 'arasaac_id': '4952', 'arasaac_categories': 'meat,core vocabulary-feeding,gastronomy'},
             {'name': 'Helado', 'image_url': 'https://static.arasaac.org/pictograms/35209/35209_2500.png', 'arasaac_id': '35209', 'arasaac_categories': 'feeding,food,ultra-processed food,dessert,summer'},
             {'name': 'Pan', 'image_url': 'https://static.arasaac.org/pictograms/2494/2494_2500.png', 'arasaac_id': '2494', 'arasaac_categories': 'feeding,food,ultra-processed food,core vocabulary'},
