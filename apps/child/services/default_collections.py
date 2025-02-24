@@ -5,9 +5,11 @@ DEFAULT_COLLECTIONS = [
         'image_url': 'https://static.arasaac.org/pictograms/4610/4610_2500.png',
         'pictograms': [
             {'name': 'Tomate', 'image_url': 'https://static.arasaac.org/pictograms/2594/2594_2500.png', 'arasaac_id': '2594', 'arasaac_categories': 'feeding,food,plant-based food,vegetable,core vocabulary'},
+            {'name': 'Zanahoria', 'image_url': 'https://static.arasaac.org/pictograms/2619/2619_2500.png', 'arasaac_id': '2619', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
             {'name': 'Pollo', 'image_url': 'https://static.arasaac.org/pictograms/4952/4952_2500.png', 'arasaac_id': '4952', 'arasaac_categories': 'meat,core vocabulary-feeding,gastronomy'},
             {'name': 'Helado', 'image_url': 'https://static.arasaac.org/pictograms/35209/35209_2500.png', 'arasaac_id': '35209', 'arasaac_categories': 'feeding,food,ultra-processed food,dessert,summer'},
             {'name': 'Pan', 'image_url': 'https://static.arasaac.org/pictograms/2494/2494_2500.png', 'arasaac_id': '2494', 'arasaac_categories': 'feeding,food,ultra-processed food,core vocabulary'},
+            {'name': 'Tostada', 'image_url': 'https://static.arasaac.org/pictograms/2787/2787_2500.png', 'arasaac_id': '2787', 'arasaac_categories': 'feeding,food,ultra-processed food'},
             {'name': 'Queso', 'image_url': 'https://static.arasaac.org/pictograms/2541/2541_2500.png', 'arasaac_id': '2541', 'arasaac_categories': 'feeding,food,animal-based food,dairy product,processed food,core vocabulary'},
             {'name': 'Arroz', 'image_url': 'https://static.arasaac.org/pictograms/39387/39387_2500.png', 'arasaac_id': '39387', 'arasaac_categories': 'feeding,food,gastronomy,core vocabulary'},
             {'name': 'Huevo', 'image_url': 'https://static.arasaac.org/pictograms/38868/38868_2500.png', 'arasaac_id': '38868', 'arasaac_categories': 'feeding,food,animal-based food,egg product,animal,animal reproduction,oviparous'},
@@ -22,13 +24,12 @@ DEFAULT_COLLECTIONS = [
         'pictograms': [
             {'name': 'Agua', 'image_url': 'https://static.arasaac.org/pictograms/2248/2248_2500.png', 'arasaac_id': '2248', 'arasaac_categories': 'feeding,food,beverage,mineral rich food'},
             {'name': 'Leche', 'image_url': 'https://static.arasaac.org/pictograms/2445/2445_2500.png', 'arasaac_id': '2445', 'arasaac_categories': 'feeding,food,beverage,animal-based food,dairy product,core vocabulary'},
+            {'name': 'Infusión', 'image_url': 'https://static.arasaac.org/pictograms/2429/2429_2500.png', 'arasaac_id': '2429', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Zumo de naranja', 'image_url': 'https://static.arasaac.org/pictograms/2624/2624_2500.png', 'arasaac_id': '2624', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Zumo de uva', 'image_url': 'https://static.arasaac.org/pictograms/11405/11405_2500.png', 'arasaac_id': '11405', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Zumo de manzana', 'image_url': 'https://static.arasaac.org/pictograms/11403/11403_2500.png', 'arasaac_id': '11403', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Zumo de piña', 'image_url': 'https://static.arasaac.org/pictograms/2625/2625_2500.png', 'arasaac_id': '2625', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Té', 'image_url': 'https://static.arasaac.org/pictograms/29802/29802_2500.png', 'arasaac_id': '29802', 'arasaac_categories': 'feeding,food,beverage'},
-            {'name': 'Batido de chocolate', 'image_url': 'https://static.arasaac.org/pictograms/8503/8503_2500.png', 'arasaac_id': '8503', 'arasaac_categories': 'feeding,food,beverage'},
-            {'name': 'Coca-Cola', 'image_url': 'https://static.arasaac.org/pictograms/2338/2338_2500.png', 'arasaac_id': '2338', 'arasaac_categories': 'feeding,food,beverage,core vocabulary'},
             {'name': 'Limonada', 'image_url': 'https://static.arasaac.org/pictograms/6551/6551_2500.png', 'arasaac_id': '6551', 'arasaac_categories': 'feeding,food,beverage,core vocabulary'},
         ]
     },
@@ -150,6 +151,27 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Palta', 'image_url': 'https://static.arasaac.org/pictograms/8009/8009_2500.png', 'arasaac_id': '8009', 'arasaac_categories': 'feeding,food,plant-based food,fruit'}
         ]
     },
+    
+    {
+        'name': 'Objetos',
+        'image_url': 'https://static.arasaac.org/pictograms/32582/32582_2500.png',
+        'pictograms': [
+            {'name': 'Mochila', 'image_url': 'https://static.arasaac.org/pictograms/2475/2475_2500.png', 'arasaac_id': '2475', 'arasaac_categories': 'object,fashion,accessories,core vocabulary'},
+            {'name': 'Dinero', 'image_url': 'https://static.arasaac.org/pictograms/4630/4630_2500.png', 'arasaac_id': '4630', 'arasaac_categories': 'economy,money,core vocabulary,work,tertiary sector,trade'},
+            {'name': 'Libro', 'image_url': 'https://static.arasaac.org/pictograms/25191/25191_2500.png', 'arasaac_id': '25191', 'arasaac_categories': 'educational material,library science,literature,core vocabulary-education,core vocabulary-knowledge'},
+            {'name': 'Cepillo dental', 'image_url': 'https://static.arasaac.org/pictograms/38813/38813_2500.png', 'arasaac_id': '38813', 'arasaac_categories': 'object,hygiene product,hygiene,corporal hygiene,person,routine,health,odontology,core vocabulary'},
+            {'name': 'Pasta dental', 'image_url': 'https://static.arasaac.org/pictograms/2858/2858_2500.png', 'arasaac_id': '2858', 'arasaac_categories': 'object,hygiene product,hygiene,corporal hygiene,person,routine,core vocabulary'},
+            {'name': 'LLave', 'image_url': 'https://static.arasaac.org/pictograms/8153/8153_2500.png', 'arasaac_id': '8153', 'arasaac_categories': 'place,building,home,object'},
+            {'name': 'Espejo', 'image_url': 'https://static.arasaac.org/pictograms/8573/8573_2500.png', 'arasaac_id': '8573', 'arasaac_categories': 'object,hygiene product,hygiene,corporal hygiene,core vocabulary'},
+            {'name': 'Peine', 'image_url': 'https://static.arasaac.org/pictograms/2852/2852_2500.png', 'arasaac_id': '2852', 'arasaac_categories': 'object,hygiene product,hygiene,corporal hygiene,person,routine,core vocabulary'},
+            {'name': 'Cojín', 'image_url': 'https://static.arasaac.org/pictograms/3264/3264_2500.png', 'arasaac_id': '3264', 'arasaac_categories': 'object,household,trousseau,home'},
+            {'name': 'Tijeras', 'image_url': 'https://static.arasaac.org/pictograms/2591/2591_2500.png', 'arasaac_id': '2591', 'arasaac_categories': 'object,household,utensil,home,work,tool,tertiary sector,personal services,hairdresser,secondary sector,clothing industry,core vocabulary'},
+            {'name': 'Papel higiénico', 'image_url': 'https://static.arasaac.org/pictograms/37261/37261_2500.png', 'arasaac_id': '37261', 'arasaac_categories': 'object,hygiene product,hygiene,corporal hygiene,person,routine'},
+            {'name': 'Billetes', 'image_url': 'https://static.arasaac.org/pictograms/8506/8506_2500.png', 'arasaac_id': '8506', 'arasaac_categories': 'economy,money,bill,core vocabulary'},
+            {'name': 'Céntimos', 'image_url': 'https://static.arasaac.org/pictograms/35117/35117_2500.png', 'arasaac_id': '35117', 'arasaac_categories': 'economy,money,coin,core vocabulary'}
+        ]
+    },
+        
     {
         'name': 'Emociones',
         'image_url': 'https://static.arasaac.org/pictograms/12359/12359_2500.png',
@@ -163,12 +185,27 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Nervioso', 'image_url': 'https://static.arasaac.org/pictograms/38930/38930_2500.png', 'arasaac_id': '38930', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,psychology,human response,feeling,emotion'}
         ]
     },
-        {
+    # Colección 8 - Adjetivos
+    {
         'name': 'Adjetivos',
         'image_url': 'https://static.arasaac.org/pictograms/32584/32584_2500.png',
         'pictograms': [
             {'name': 'Enfermo', 'image_url': 'https://static.arasaac.org/pictograms/28742/28742_2500.png', 'arasaac_id': '28742', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,health,medicine,disease,person,patient'},
-            {'name': 'Roto', 'image_url': 'https://static.arasaac.org/pictograms/4736/4736_2500.png', 'arasaac_id': '4736', 'arasaac_categories': 'communication,language,adjective,qualifying adjective'}
+            {'name': 'Roto', 'image_url': 'https://static.arasaac.org/pictograms/4736/4736_2500.png', 'arasaac_id': '4736', 'arasaac_categories': 'communication,language,adjective,qualifying adjective'},
+            {'name': 'Caliente', 'image_url': 'https://static.arasaac.org/pictograms/4583/4583_2500.png', 'arasaac_id': '4583', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,beverage'},
+            {'name': 'Frío', 'image_url': 'https://static.arasaac.org/pictograms/4652/4652_2500.png', 'arasaac_id': '4652', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,beverage'}
+        ]
+    },
+    # Colección 9 - Verbos
+            {
+        'name': 'Verbos',
+        'image_url': 'https://static.arasaac.org/pictograms/32067/32067_2500.png',
+        'pictograms': [
+            {'name': 'Empujar', 'image_url': 'https://static.arasaac.org/pictograms/39442/39442_2500.png', 'arasaac_id': '39442', 'arasaac_categories': 'communication,language,verb'},
+            {'name': 'Tocar', 'image_url': 'https://static.arasaac.org/pictograms/34098/34098_2500.png', 'arasaac_id': '34098', 'arasaac_categories': 'communication,language,verb'},
+            {'name': 'Abrir', 'image_url': 'https://static.arasaac.org/pictograms/24825/24825_2500.png', 'arasaac_id': '24825', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
+            {'name': 'Cerrar', 'image_url': 'https://static.arasaac.org/pictograms/24976/24976_2500.png', 'arasaac_id': '24976', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
+            {'name': 'Agitar', 'image_url': 'https://static.arasaac.org/pictograms/5365/5365_2500.png', 'arasaac_id': '5365', 'arasaac_categories': 'communication,language,verb,feeding,food,beverage'}
         ]
     },
     # Colección 9 - Transporte
