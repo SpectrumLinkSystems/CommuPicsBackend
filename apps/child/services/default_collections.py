@@ -22,7 +22,7 @@ DEFAULT_COLLECTIONS = [
         'name': 'Bebidas',
         'image_url': 'https://static.arasaac.org/pictograms/30403/30403_2500.png',
         'pictograms': [
-            {'name': 'Agua', 'image_url': 'https://static.arasaac.org/pictograms/2248/2248_2500.png', 'arasaac_id': '2248', 'arasaac_categories': 'feeding,food,beverage,mineral rich food'},
+            {'name': 'Agua', 'image_url': 'https://static.arasaac.org/pictograms/2248/2248_2500.png', 'arasaac_id': '2248', 'arasaac_categories': 'feeding,food,beverage,mineral rich food,core vocabulary'},
             {'name': 'Leche', 'image_url': 'https://static.arasaac.org/pictograms/2445/2445_2500.png', 'arasaac_id': '2445', 'arasaac_categories': 'feeding,food,beverage,animal-based food,dairy product,core vocabulary'},
             {'name': 'Infusión', 'image_url': 'https://static.arasaac.org/pictograms/2429/2429_2500.png', 'arasaac_id': '2429', 'arasaac_categories': 'feeding,food,beverage'},
             {'name': 'Zumo de naranja', 'image_url': 'https://static.arasaac.org/pictograms/2624/2624_2500.png', 'arasaac_id': '2624', 'arasaac_categories': 'feeding,food,beverage'},
@@ -213,16 +213,16 @@ DEFAULT_COLLECTIONS = [
         'name': 'Transportes',
         'image_url': 'https://static.arasaac.org/pictograms/10351/10351_2500.png',
         'pictograms': [
-            {'name': 'Coche', 'image_url': 'https://static.arasaac.org/pictograms/1501/1501_2500.png', 'arasaac_id': '1501', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Autobús', 'image_url': 'https://static.arasaac.org/pictograms/2263/2263_2500.png', 'arasaac_id': '2263', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Bicicleta', 'image_url': 'https://static.arasaac.org/pictograms/2277/2277_2500.png', 'arasaac_id': '2277', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Tren', 'image_url': 'https://static.arasaac.org/pictograms/2603/2603_2500.png', 'arasaac_id': '2603', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Avión', 'image_url': 'https://static.arasaac.org/pictograms/6924/6924_2500.png', 'arasaac_id': '6924', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Barco', 'image_url': 'https://static.arasaac.org/pictograms/2273/2273_2500.png', 'arasaac_id': '2273', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Motocicleta', 'image_url': 'https://static.arasaac.org/pictograms/2480/2480_2500.png', 'arasaac_id': '2480', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Camión', 'image_url': 'https://static.arasaac.org/pictograms/2306/2306_2500.png', 'arasaac_id': '2306', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Metro', 'image_url': 'https://static.arasaac.org/pictograms/2472/2472_2500.png', 'arasaac_id': '2472', 'arasaac_categories': 'Vehículo, Transporte'},
-            {'name': 'Helicóptero', 'image_url': 'https://static.arasaac.org/pictograms/2421/2421_2500.png', 'arasaac_id': '2421', 'arasaac_categories': 'Vehículo, Transporte'}
+            {'name': 'Coche', 'image_url': 'https://static.arasaac.org/pictograms/2339/2339_2500.png', 'arasaac_id': '2339', 'arasaac_categories': 'movement,traffic,mode of transport,land transport,road safety,core vocabulary'},
+            {'name': 'Autobús', 'image_url': 'https://static.arasaac.org/pictograms/2262/2262_2500.png', 'arasaac_id': '2262', 'arasaac_categories': 'movement,traffic,mode of transport,land transport,core vocabulary'},
+            {'name': 'Bicicleta', 'image_url': 'https://static.arasaac.org/pictograms/2277/2277_2500.png', 'arasaac_id': '2277', 'arasaac_categories': 'movement,traffic,mode of transport,land transport'},
+            {'name': 'Tren', 'image_url': 'https://static.arasaac.org/pictograms/2603/2603_2500.png', 'arasaac_id': '2603', 'arasaac_categories': 'movement,traffic,mode of transport,land transport'},
+            {'name': 'Avión', 'image_url': 'https://static.arasaac.org/pictograms/6924/6924_2500.png', 'arasaac_id': '6924', 'arasaac_categories': 'movement,traffic,mode of transport,air transport'},
+            {'name': 'Barco', 'image_url': 'https://static.arasaac.org/pictograms/2273/2273_2500.png', 'arasaac_id': '2273', 'arasaac_categories': 'movement,traffic,mode of transport,water transport'},
+            {'name': 'Motocicleta', 'image_url': 'https://static.arasaac.org/pictograms/2480/2480_2500.png', 'arasaac_id': '2480', 'arasaac_categories': 'movement,traffic,mode of transport,land transport'},
+            {'name': 'Camión', 'image_url': 'https://static.arasaac.org/pictograms/2306/2306_2500.png', 'arasaac_id': '2306', 'arasaac_categories': 'movement,traffic,mode of transport,land transport'},
+            {'name': 'Metro', 'image_url': 'https://static.arasaac.org/pictograms/2472/2472_2500.png', 'arasaac_id': '2472', 'arasaac_categories': 'movement,traffic,mode of transport,land transport'},
+            {'name': 'Helicóptero', 'image_url': 'https://static.arasaac.org/pictograms/2421/2421_2500.png', 'arasaac_id': '2421', 'arasaac_categories': 'movement,traffic,mode of transport,air transpor'}
         ]
     },
     # Colección 10 - Rutina Diaria
@@ -230,15 +230,15 @@ DEFAULT_COLLECTIONS = [
         'name': 'Rutina Diaria',
         'image_url': 'https://static.arasaac.org/pictograms/36347/36347_2500.png',
         'pictograms': [
-            {'name': 'Despertar', 'image_url': 'https://static.arasaac.org/pictograms/8988/8988_2500.png', 'arasaac_id': '8988', 'arasaac_categories': 'Acción, Rutina'},
-            {'name': 'Cepillar los Dientes', 'image_url': 'https://static.arasaac.org/pictograms/31880/31880_2500.png', 'arasaac_id': '31880', 'arasaac_categories': 'Acción, Higiene'},
-            {'name': 'Vestir', 'image_url': 'https://static.arasaac.org/pictograms/6627/6627_2500.png', 'arasaac_id': '6627', 'arasaac_categories': 'Acción, Rutina'},
-            {'name': 'Comer', 'image_url': 'https://static.arasaac.org/pictograms/6456/6456_2500.png', 'arasaac_id': '6456', 'arasaac_categories': 'Acción, Comida'},
-            {'name': 'Ir al colegio', 'image_url': 'https://static.arasaac.org/pictograms/36473/36473_2500.png', 'arasaac_id': '36473', 'arasaac_categories': 'Acción, Educación'},
-            {'name': 'Jugar', 'image_url': 'https://static.arasaac.org/pictograms/6537/6537_2500.png', 'arasaac_id': '6537', 'arasaac_categories': 'Acción, Ocio'},
-            {'name': 'Dormir', 'image_url': 'https://static.arasaac.org/pictograms/6479/6479_2500.png', 'arasaac_id': '6479', 'arasaac_categories': 'Acción, Rutina'},
-            {'name': 'Limpiar la boca', 'image_url': 'https://static.arasaac.org/pictograms/17271/17271_2500.png', 'arasaac_id': '17271', 'arasaac_categories': 'Acción, Rutina'},
-            {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'Acción, Rutina'}
+            {'name': 'Despertar', 'image_url': 'https://static.arasaac.org/pictograms/8988/8988_2500.png', 'arasaac_id': '8988', 'arasaac_categories': 'communication,language,verb,person,routine'},
+            {'name': 'Cepillar los Dientes', 'image_url': 'https://static.arasaac.org/pictograms/31880/31880_2500.png', 'arasaac_id': '31880', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,object,hygiene product,person,routine'},
+            {'name': 'Vestir', 'image_url': 'https://static.arasaac.org/pictograms/6627/6627_2500.png', 'arasaac_id': '6627', 'arasaac_categories': 'communication,language,verb,usual verbs,object,fashion,clothes,person,basic needs,routine,core vocabulary,accessories'},
+            {'name': 'Comer', 'image_url': 'https://static.arasaac.org/pictograms/6456/6456_2500.png', 'arasaac_id': '6456', 'arasaac_categories': 'communication,language,verb,feeding,food,person,basic needs,core vocabulary,gastronomy'},
+            {'name': 'Ir al colegio', 'image_url': 'https://static.arasaac.org/pictograms/36473/36473_2500.png', 'arasaac_id': '36473', 'arasaac_categories': 'communication,language,verb,movement,education,building,place'},
+            {'name': 'Jugar', 'image_url': 'https://static.arasaac.org/pictograms/6537/6537_2500.png', 'arasaac_id': '6537', 'arasaac_categories': 'communication,language,verb,leisure,sport,traditional game,usual verbs,core vocabulary'},
+            {'name': 'Dormir', 'image_url': 'https://static.arasaac.org/pictograms/6479/6479_2500.png', 'arasaac_id': '6479', 'arasaac_categories': 'communication,language,verb,usual verbs,person,basic needs,routine,core vocabulary'},
+            {'name': 'Limpiar la boca', 'image_url': 'https://static.arasaac.org/pictograms/17271/17271_2500.png', 'arasaac_id': '17271', 'arasaac_categories': 'communication,language,verb,person,routine'},
+            {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'}
         ]
     }
 ]

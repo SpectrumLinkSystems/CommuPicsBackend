@@ -51,12 +51,31 @@ class CollectionView(viewsets.ModelViewSet):
 
             pictograms = Pictogram.objects.filter(collection_id=collection)
 
-            # # Aplicar filtro según el nivel de autismo
-            # if child.autism_level == 1:
-            #     pictograms = pictograms.filter(arasaac_categories__icontains="core vocabulary")
+            if child.autism_level == 1:
+                pictograms = pictograms.filter(
+                    arasaac_categories__icontains="core vocabulary"
+                ) | pictograms.filter(arasaac_categories__icontains="pet"
+                ) | pictograms.filter(arasaac_categories__icontains="number"
+                ) | pictograms.filter(arasaac_categories__icontains="letter")
+
+            elif child.autism_level == 2:
+                pictograms = pictograms.filter(
+                    arasaac_categories__icontains="core vocabulary"
+                ) | pictograms.filter(arasaac_categories__icontains="pet"
+                ) | pictograms.filter(arasaac_categories__icontains="number"
+                ) | pictograms.filter(arasaac_categories__icontains="letter"
+                ) | pictograms.filter(arasaac_categories__icontains="adjective"
+                ) | pictograms.filter(arasaac_categories__icontains="movement"
+                ) | pictograms.filter(arasaac_categories__icontains="object")
+
+            elif child.autism_level == 3:
+                pass
+
+            if not pictograms.exists():
+                return Response([], status=200)
 
             serializer = PictogramSerializer(pictograms, many=True)
             return Response(serializer.data)
 
         except Collection.DoesNotExist:
-            return Response({"error": "Collection not found"}, status=404)
+            return Response([], status=200)
