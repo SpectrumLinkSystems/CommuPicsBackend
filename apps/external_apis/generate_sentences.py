@@ -24,6 +24,20 @@ class SentenceGeneratorViewSet(ViewSet):
             if not pictograms.exists():
                 return Response({"error": "No hay pictogramas disponibles para este niño."}, status=404)
 
+            # Obtener los nombres de los pictogramas
+            #pictogram_names = [p.name for p in pictograms]
+            
+            # Generar la oración con OpenAI
+            # openai.api_key = "TU_API_KEY"
+            # prompt = f"Genera una oración en español usando las siguientes palabras: {', '.join(pictogram_names)}"
+            # response = openai.Completion.create(
+            #     model="text-davinci-003",
+            #     prompt=prompt,
+            #     max_tokens=50
+            # )
+            
+            #sentence = response.choices[0].text.strip()
+
             if child.sentence_complexity == "simple":
 
                 pictograms = pictograms.exclude(arasaac_categories__icontains="conjunction")
