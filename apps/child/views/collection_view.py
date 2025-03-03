@@ -51,7 +51,7 @@ class CollectionView(viewsets.ModelViewSet):
 
             pictograms = Pictogram.objects.filter(collection_id=collection)
 
-            if child.autism_level == 1:
+            if child.autism_level == 3:
                 pictograms = pictograms.filter(
                     arasaac_categories__icontains="core vocabulary"
                 ) | pictograms.filter(arasaac_categories__icontains="pet"
@@ -68,7 +68,7 @@ class CollectionView(viewsets.ModelViewSet):
                 ) | pictograms.filter(arasaac_categories__icontains="movement"
                 ) | pictograms.filter(arasaac_categories__icontains="object")
 
-            elif child.autism_level == 3:
+            elif child.autism_level == 1:
                 pass
 
             if not pictograms.exists():
