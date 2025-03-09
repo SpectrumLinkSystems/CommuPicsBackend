@@ -16,6 +16,7 @@ from apps.child.services.collection_service import CollectionService
 class CollectionView(viewsets.ModelViewSet):
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
+#prueba 1
 
     @extend_schema(
         request=OpenApiRequest(
