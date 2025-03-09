@@ -8,7 +8,7 @@ import cv2
 from django.db.models import ObjectDoesNotExist
 
 def create_therapist(data):
-    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator']
+    allowed_fields = ['name', 'last_name', 'document_type', 'document_number','date_of_birth', 'document_front_validator', 'document_back_validator', 'firebase_id']
     filtered_data = {key: value for key, value in data.items() if key in allowed_fields}
     therapist = Therapist.objects.create(**filtered_data)
     return therapist
