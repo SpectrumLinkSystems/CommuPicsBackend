@@ -4,12 +4,10 @@ from rest_framework import request, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-import qrcode
-from io import BytesIO
-import base64
-
+from django.db.models import Q
 from apps.child.models.child import Child
 from apps.child.models.collection import Collection
+from apps.child.models.pictogram import Pictogram
 from apps.child.serializers.child_serializer import ChildSerializer
 from apps.child.serializers.collection_serializer import CollectionSerializer
 from apps.child.services.child_service import create_child_for_parent, get_children_by_parent, get_child_by_parent, update_child_for_parent, delete_child_for_parent, update_autism_level, generar_qr;
@@ -39,6 +37,7 @@ class ChildViewSet(viewsets.ModelViewSet):
         serializer = ChildSerializer(child)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
     @extend_schema(
         responses={200: CollectionSerializer(many=True)},
         parameters=[
@@ -47,9 +46,49 @@ class ChildViewSet(viewsets.ModelViewSet):
     )
     @action(detail=False, methods=["get"], url_path="(?P<child_id>[^/.]+)/collections")
     def get_collections_by_child_id(self, request, child_id):
-        collections = Collection.objects.filter(child_id=child_id)
-        serializer = CollectionSerializer(collections, many=True)
-        return Response(serializer.data)
+        try:
+            # Obtener todas las colecciones del niño
+            collections = Collection.objects.filter(child_id=child_id)
+            
+            # Lista para almacenar las colecciones que tienen pictogramas filtrados
+            filtered_collections = []
+
+            for collection in collections:
+                # Obtener los pictogramas de la colección
+                pictograms = Pictogram.objects.filter(collection_id=collection)
+
+                # Aplicar los filtros según el nivel de autismo del niño
+                child = collection.child_id
+                if child.autism_level == 3:
+                    pictograms = pictograms.filter(
+                        Q(arasaac_categories__icontains="core vocabulary") |
+                        Q(arasaac_categories__icontains="pet") |
+                        Q(arasaac_categories__icontains="number") |
+                        Q(arasaac_categories__icontains="letter")
+                    )
+                elif child.autism_level == 2:
+                    pictograms = pictograms.filter(
+                        Q(arasaac_categories__icontains="core vocabulary") |
+                        Q(arasaac_categories__icontains="pet") |
+                        Q(arasaac_categories__icontains="number") |
+                        Q(arasaac_categories__icontains="letter") |
+                        Q(arasaac_categories__icontains="adjective") |
+                        Q(arasaac_categories__icontains="movement") |
+                        Q(arasaac_categories__icontains="object")
+                    )
+                elif child.autism_level == 1:
+                    pass  # No se aplican filtros adicionales
+
+                # Si la colección tiene pictogramas que cumplen con los filtros, la añadimos a la lista
+                if pictograms.exists():
+                    filtered_collections.append(collection)
+
+            # Serializar las colecciones filtradas
+            serializer = CollectionSerializer(filtered_collections, many=True)
+            return Response(serializer.data)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
     
     @extend_schema(
         request=ChildSerializer,
