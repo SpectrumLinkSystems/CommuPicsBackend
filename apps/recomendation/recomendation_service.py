@@ -3,7 +3,7 @@ import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from django.db.models import Sum
-from apps.child.models.pictogram import Pictogram, PictogramUsage
+from apps.pecs.models.pictogram import Pictogram, PictogramUsage
 from datetime import datetime
 
 def get_pictogram_recommendations(child_id, selected_pictogram_id):

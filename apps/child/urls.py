@@ -3,9 +3,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 
 from apps.child.views.child_view import ChildViewSet
-from apps.child.views.collection_view import CollectionView
-from apps.child.views.pictogram_view import PictogramView
-from apps.child.views.pictogram_usage_view import PictogramUsageView
+from apps.pecs.views.collection_view import CollectionView 
+from apps.pecs.views.pictogram_view import PictogramView
+from apps.pecs.views.pictogram_usage_view import PictogramUsageView
 from apps.recomendation.recomendation_view import RecomendationView
 
 router = DefaultRouter()

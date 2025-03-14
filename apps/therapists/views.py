@@ -4,6 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.decorators import action, api_view, parser_classes
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from pyzbar.pyzbar import decode
 from PIL import Image
 import cv2
@@ -11,61 +12,32 @@ import numpy as np
 
 from .models import Therapist
 from .serializers import TherapistSerializer
-from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id, escanear_qr)
+from .services import (
+    get_therapist_by_firebase_id,
+)
+
 
 class TherapistViewSet(viewsets.ModelViewSet):
     queryset = Therapist.objects.all()
     serializer_class = TherapistSerializer
 
-    def create(self, request, *args, **kwargs):
-        therapist = create_therapist(request.data)
-        serializer = TherapistSerializer(therapist)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    def list(self, request, *args, **kwargs):
-        therapists = get_all_therapists()
-        serializer = TherapistSerializer(therapists, many=True)
-        return Response(serializer.data)
-
     def assign_child(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        child_id = request.data.get('child_id')
+        therapist_id = self.kwargs.get("pk")
+        child_id = request.data.get("child_id")
 
         therapist = get_object_or_404(Therapist, id=therapist_id)
         child = get_object_or_404(Child, id=child_id)
 
         child.therapists.add(therapist)
-        
-        return Response({"message": f"Child {child.name} assigned to therapist {therapist.name}"}, status=status.HTTP_200_OK)
 
-    def retrieve(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        therapist = get_therapist_by_id(therapist_id)
-        if therapist:
-            serializer = TherapistSerializer(therapist)
-            return Response(serializer.data)
-        else:
-            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(
+            {"message": f"Child {child.name} assigned to therapist {therapist.name}"},
+            status=status.HTTP_200_OK,
+        )
 
-    def update(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        therapist = update_therapist(therapist_id, request.data)
-        if therapist:
-            serializer = TherapistSerializer(therapist)
-            return Response({"message": "Therapist updated", "therapist": serializer.data})
-        else:
-            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
-
-    def destroy(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        if delete_therapist(therapist_id):
-            return Response({"message": "Therapist deleted"})
-        else:
-            return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
-    
     def child_tracking(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        child_id = request.data.get('child_id')
+        therapist_id = self.kwargs.get("pk")
+        child_id = request.data.get("child_id")
 
         therapist = get_object_or_404(Therapist, id=therapist_id)
         child = get_object_or_404(Child, id=child_id)
@@ -98,10 +70,14 @@ class TherapistViewSet(viewsets.ModelViewSet):
         if therapist:
             serializer = self.get_serializer(therapist)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response(
+            {"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND
+        )
 
     @extend_schema(
-        responses={200: {"type": "object", "properties": {"id_nino": {"type": "string"}}}},
+        responses={
+            200: {"type": "object", "properties": {"id_nino": {"type": "string"}}}
+        },
     )
     @action(detail=False, methods=["get"])
     def escanear_qr_camara(self, request):
@@ -109,7 +85,10 @@ class TherapistViewSet(viewsets.ModelViewSet):
         cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Evita errores en Windows
 
         if not cap.isOpened():
-            return Response({"error": "No se pudo acceder a la cámara"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(
+                {"error": "No se pudo acceder a la cámara"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
         detector = cv2.QRCodeDetector()
 
@@ -124,10 +103,12 @@ class TherapistViewSet(viewsets.ModelViewSet):
                     return Response({"id_nino": data}, status=status.HTTP_200_OK)
 
                 cv2.imshow("Escanear QR", frame)
-                if cv2.waitKey(1) & 0xFF == ord('q'):
+                if cv2.waitKey(1) & 0xFF == ord("q"):
                     break
         finally:
             cap.release()
             cv2.destroyAllWindows()
 
-        return Response({"error": "No se detectó un código QR"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"error": "No se detectó un código QR"}, status=status.HTTP_400_BAD_REQUEST
+        )

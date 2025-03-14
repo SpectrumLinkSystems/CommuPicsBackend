@@ -23,8 +23,6 @@ from dotenv import dotenv_values, load_dotenv
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework import permissions
 
-from apps.recognition.views import RecognitionView
-
 load_dotenv()
 
 urlpatterns = [
@@ -37,5 +35,5 @@ urlpatterns = [
     path("", include("apps.parents.urls")),
     path("", include("apps.therapists.urls")),
     path("", include("apps.child.urls")),
-    path("recognition/", RecognitionView.as_view()),
+    #path("recognition/", RecognitionView.as_view()),
 ]

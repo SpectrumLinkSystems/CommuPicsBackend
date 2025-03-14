@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from apps.child.models.pictogram import PictogramUsage
-from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSerializer
+from apps.pecs.models.pictogram import PictogramUsage
+from apps.pecs.serializers.pictogram_usage_serializer import PictogramUsageSerializer
 from apps.child.services.pictogram_service import PictogramService
 
 class PictogramUsageView(viewsets.ModelViewSet):

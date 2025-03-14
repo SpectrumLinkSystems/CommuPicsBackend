@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.child.models.collection import Collection
+from apps.pecs.models.collection import Collection
 
 
 class CollectionSerializer(serializers.ModelSerializer):

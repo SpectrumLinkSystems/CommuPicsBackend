@@ -1,13 +1,13 @@
 from django.db.models import ObjectDoesNotExist
 
-from django.utils import timezone
 from django.db import transaction
-from apps.child.models import Pictogram
+from django.db.models import ObjectDoesNotExist
+from django.utils import timezone
+
 from apps.child.models.child import Child
-from apps.child.models.collection import Collection
-from apps.child.models.pictogram import PictogramUsage
-from apps.child.serializers.pictogram_serializer import \
-    CreatePictogramSerializer, CreateManyPictogramsSerializer
+from apps.pecs.models.collection import Collection
+from apps.pecs.models.pictogram import Pictogram, PictogramUsage
+from apps.pecs.serializers.pictogram_serializer import CreateManyPictogramsSerializer, CreatePictogramSerializer
 from apps.external_apis.arasaac import ArasaacService
 
 

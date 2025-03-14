@@ -11,10 +11,10 @@ from .views import ParentViewSet
 router = DefaultRouter()
 router.register(r"parents", ParentViewSet, basename="parents")
 
-parents_router = NestedDefaultRouter(router, r"parents", lookup="parent")
-parents_router.register(r"children", ChildViewSet, basename="parent-children")
+#parents_router = NestedDefaultRouter(router, r"parents", lookup="parent")
+#parents_router.register(r"children", ChildViewSet, basename="parent-children")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("", include(parents_router.urls)),
+    #path("", include(parents_router.urls)),
 ]

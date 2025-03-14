@@ -7,11 +7,11 @@ from apps.child.views.child_view import ChildViewSet
 router = DefaultRouter()
 router.register(r'therapists', TherapistViewSet, basename='therapists')
 
-therapists_router = NestedDefaultRouter(router, r'therapists', lookup='therapist')
-therapists_router.register(r'children', ChildViewSet, basename='therapist-children')
+# therapists_router = NestedDefaultRouter(router, r'therapists', lookup='therapist')
+# therapists_router.register(r'children', ChildViewSet, basename='therapist-children')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('', include(therapists_router.urls)),
+    # path('', include(therapists_router.urls)),
     path('therapists/<int:pk>/child_tracking/', TherapistViewSet.as_view({'post': 'child_tracking'}), name='child_tracking'),
 ]

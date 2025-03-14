@@ -6,10 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from apps.child.models.child import Child
-from apps.child.models.collection import Collection
-from apps.child.models.pictogram import Pictogram
+from apps.pecs.models.collection import Collection
+from apps.pecs.models.pictogram import Pictogram
 from apps.child.serializers.child_serializer import ChildSerializer
-from apps.child.serializers.collection_serializer import CollectionSerializer
+from apps.pecs.serializers.collection_serializer import CollectionSerializer
 from apps.child.services.child_service import create_child_for_parent, get_children_by_parent, get_child_by_parent, update_child_for_parent, delete_child_for_parent, update_autism_level, generar_qr;
 
 class ChildViewSet(viewsets.ModelViewSet):

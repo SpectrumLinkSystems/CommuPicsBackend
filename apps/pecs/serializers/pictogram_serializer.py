@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from apps.child.models.pictogram import Pictogram
+from apps.pecs.models.pictogram import Pictogram
 
 
 class PictogramSerializer(serializers.ModelSerializer):

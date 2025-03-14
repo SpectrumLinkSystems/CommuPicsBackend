@@ -1,5 +1,5 @@
 from apps.child.models import Child
-from apps.child.models.collection import Collection
+from apps.pecs.models.collection import Collection
 
 class CollectionService:
     def __init__(self):

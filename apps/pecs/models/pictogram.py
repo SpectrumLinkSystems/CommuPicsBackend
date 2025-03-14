@@ -1,6 +1,7 @@
+from django.conf.locale import da
 from django.db import models
 
-from apps.child.models.collection import Collection
+from apps.pecs.models.collection import Collection
 from apps.child.models.child import Child
 
 
@@ -10,6 +11,9 @@ class Pictogram(models.Model):
     arasaac_id = models.CharField(max_length=50)
     arasaac_categories = models.CharField(max_length=255)
     collection_id = models.ForeignKey(Collection, on_delete=models.CASCADE)
+    
+    class Meta:
+        db_table = "child_pictogram"
 
 
 class PictogramUsage(models.Model):
@@ -19,7 +23,7 @@ class PictogramUsage(models.Model):
     cant_used = models.IntegerField(default=1)
     
     class Meta:
-
+        db_table = "child_pictogramusage"
         unique_together = ['child', 'pictogram']
 
     def __str__(self):
