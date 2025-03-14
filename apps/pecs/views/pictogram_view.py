@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from apps.pecs.models.pictogram import Pictogram
 from apps.pecs.serializers.pictogram_serializer import (
     CreatePictogramSerializer, PictogramSerializer, CreateManyPictogramsSerializer)
-from apps.child.services.pictogram_service import PictogramService, create_many_pictograms
+from apps.pecs.services.pictogram_service import PictogramService, create_many_pictograms
 
 
 class PictogramView(viewsets.ModelViewSet):

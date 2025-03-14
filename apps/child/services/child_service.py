@@ -12,7 +12,7 @@ from apps.child.models import Child
 from apps.pecs.models.collection import Collection
 from apps.pecs.models.pictogram import Pictogram
 from apps.parents.models import Parent
-from .default_collections import DEFAULT_COLLECTIONS
+from apps.pecs.services.default_collections import DEFAULT_COLLECTIONS
 
 
 def create_child_for_parent(parent_id, child_data):

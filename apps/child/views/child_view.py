@@ -17,8 +17,11 @@ class ChildViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         parent_id = self.kwargs.get("parent_pk")
+        therapist_id = self.kwargs.get("therapist_pk")
         if parent_id:
             return Child.objects.filter(parent_id=parent_id)
+        if therapist_id:
+            return Child.objects.filter(therapist_id=therapist_id)
         return Child.objects.all()
     
     def create(self, request, *args, **kwargs):

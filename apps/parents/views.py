@@ -39,3 +39,6 @@ class ParentViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(parent)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error": "Parent not found"}, status=status.HTTP_404_NOT_FOUND)
+    
+    def get_children_by_parent_id(self, request):
+        pass

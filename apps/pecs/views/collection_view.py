@@ -15,7 +15,7 @@ from apps.pecs.models.collection import Collection
 from apps.pecs.models.pictogram import Pictogram
 from apps.pecs.serializers.collection_serializer import CollectionSerializer
 from apps.pecs.serializers.pictogram_serializer import PictogramSerializer
-from apps.child.services.collection_service import CollectionService
+from apps.pecs.services.collection_service import CollectionService
 
 
 class CollectionView(viewsets.ModelViewSet):

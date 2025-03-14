@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from apps.pecs.models.pictogram import PictogramUsage
 from apps.pecs.serializers.pictogram_usage_serializer import PictogramUsageSerializer
-from apps.child.services.pictogram_service import PictogramService
+from apps.pecs.services.pictogram_service import PictogramService
 
 class PictogramUsageView(viewsets.ModelViewSet):
     queryset = PictogramUsage.objects.all()
