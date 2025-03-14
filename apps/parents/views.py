@@ -7,9 +7,15 @@ from rest_framework.response import Response
 from apps.parents.models import Parent
 
 from .serializers import ParentSerializer
-from .services import (create_parent, delete_parent, get_all_parents,
-                       get_parent_by_firebase_id, get_parent_by_id,
-                       update_parent)
+from .services import (
+    create_parent,
+    delete_parent,
+    get_all_parents,
+    get_parent_by_firebase_id,
+    get_parent_by_id,
+    update_parent,
+)
+
 
 class ParentViewSet(viewsets.ModelViewSet):
     queryset = Parent.objects.all()

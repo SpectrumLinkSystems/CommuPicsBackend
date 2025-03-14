@@ -8,7 +8,6 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from apps.child.services import child_service
 from apps.external_apis.image_recognotion_service import ImageRecognitionService
 from apps.images_storage.cloudinary_service import CloudinaryService
-from apps.recognition.serializers import RecognotionSerializer
 
 class RecognitionView(APIView):
     def __init__(self):

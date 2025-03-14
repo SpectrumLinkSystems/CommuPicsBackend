@@ -483,3 +483,4 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,python,django,visualstudiocode
+apps/external_apis/notes_recog.txt
