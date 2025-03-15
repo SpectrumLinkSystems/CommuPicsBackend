@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from apps.pecs.serializers.pictogram_usage_serializer import PictogramUsageSerializer
-from apps.recomendation.recomendation_service import get_pictogram_recommendations
+from apps.child.services.recomendation_service import get_pictogram_recommendations
 
 
 class RecomendationView(viewsets.ModelViewSet):

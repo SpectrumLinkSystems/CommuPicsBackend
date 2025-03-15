@@ -9,7 +9,10 @@ from drf_spectacular.utils import (
 )
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 from apps.pecs.models.collection import Collection
 from apps.pecs.models.pictogram import Pictogram
@@ -24,33 +27,14 @@ class CollectionView(viewsets.ModelViewSet):
     # prueba 1
 
     @extend_schema(
-        request=OpenApiRequest(
-            request=CollectionSerializer(many=True),
-        ),
-        responses={201: OpenApiResponse(response=List[int])},
-    )
-    @action(detail=False, methods=["post"], url_path="many")
-    def create_collections(self, request, *args, **kwargs):
-        try:
-            new_ids = CollectionService.create_many_collections(
-                self, collections=request.data
-            )
-            return Response({"ids": new_ids}, status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-    @extend_schema(
         responses={200: PictogramSerializer(many=True)},
-        parameters=[
-            OpenApiParameter("collection_id", OpenApiTypes.STR, OpenApiParameter.PATH)
-        ],
     )
     @action(
-        detail=False, methods=["get"], url_path="(?P<collection_id>[^/.]+)/pictograms"
+        detail=False, methods=["get"], url_path="(?P<collection_pk>[^/.]+)/pictograms"
     )
-    def get_pictograms_by_collection_id(self, request, collection_id):
+    def get_pictograms_by_collection_id(self, request, collection_pk):
         try:
-            collection = Collection.objects.get(id=collection_id)
+            collection = Collection.objects.get(id=collection_pk)
             child = collection.child_id
 
             pictograms = Pictogram.objects.filter(collection_id=collection)
@@ -85,3 +69,24 @@ class CollectionView(viewsets.ModelViewSet):
 
         except Collection.DoesNotExist:
             return Response([], status=200)
+
+
+class CollectionChildView(GenericViewSet, ListModelMixin, CreateModelMixin):
+    queryset = Collection.objects.all()
+    serializer_class = CollectionSerializer
+
+    @extend_schema(
+        request=OpenApiRequest(
+            request=CollectionSerializer(many=True),
+        ),
+        responses={201: OpenApiResponse(response=List[int])},
+    )
+    @action(detail=False, methods=["post"], url_path="many")
+    def create_collections(self, request, *args, **kwargs):
+        try:
+            new_ids = CollectionService.create_many_collections(
+                self, collections=request.data
+            )
+            return Response({"ids": new_ids}, status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)

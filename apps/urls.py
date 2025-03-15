@@ -35,5 +35,6 @@ urlpatterns = [
     path("", include("apps.parents.urls")),
     path("", include("apps.therapists.urls")),
     path("", include("apps.child.urls")),
+    path("", include("apps.pecs.urls")),
     #path("recognition/", RecognitionView.as_view()),
 ]
