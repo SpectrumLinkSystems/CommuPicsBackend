@@ -240,5 +240,27 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Limpiar la boca', 'image_url': 'https://static.arasaac.org/pictograms/17271/17271_2500.png', 'arasaac_id': '17271', 'arasaac_categories': 'communication,language,verb,person,routine'},
             {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'}
         ]
+    },
+    # Colección 10 - pronombres y conunciones para hacer oraciones
+    {
+        'name': 'Pronombres',
+        'image_url': 'https://static.arasaac.org/pictograms/7185/7185_2500.png',
+        'pictograms': [
+            {'name': 'él', 'image_url': 'https://static.arasaac.org/pictograms/6480/6480_2500.png', 'arasaac_id': '6480', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
+            {'name': 'ella', 'image_url': 'https://static.arasaac.org/pictograms/7028/7028_2500.png', 'arasaac_id': '7028', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
+            {'name': 'yo', 'image_url': 'https://static.arasaac.org/pictograms/31807/31807_2500.png', 'arasaac_id': '31807', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,document'},
+            {'name': 'tú', 'image_url': 'https://static.arasaac.org/pictograms/31801/31801_2500.png', 'arasaac_id': '31801', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
+            {'name': 'mamá', 'image_url': 'https://static.arasaac.org/pictograms/2458/2458_2500.png', 'arasaac_id': '2458', 'arasaac_categories': 'person,family,core vocabulary,pronoun'},
+            {'name': 'papá', 'image_url': 'https://static.arasaac.org/pictograms/31146/31146_2500.png', 'arasaac_id': '31146', 'arasaac_categories': 'person,family,core vocabulary,pronoun'},
+        ]
+    },
+    {
+        'name': 'Conjunciones',
+        'image_url': 'https://static.arasaac.org/pictograms/3047/3047_2500.png',
+        'pictograms': [
+            {'name': 'y', 'image_url': 'https://static.arasaac.org/pictograms/3047/3047_2500.png', 'arasaac_id': '3047', 'arasaac_categories': 'communication,language,alphabet,letter,conjunction,copulative conjunction'},
+            {'name': 'o', 'image_url': 'https://static.arasaac.org/pictograms/3037/3037_2500.png', 'arasaac_id': '3037', 'arasaac_categories': 'communication,language,alphabet,letter,conjunction,copulative conjunction,disjunctive conjunction'},
+            {'name': 'pero', 'image_url': 'https://static.arasaac.org/pictograms/11377/11377_2500.png', 'arasaac_id': '11377', 'arasaac_categories': 'communication,language,conjunction,adversative conjunction'},
+        ]
     }
 ]

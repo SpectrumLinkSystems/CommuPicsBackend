@@ -51,7 +51,7 @@ class CollectionView(viewsets.ModelViewSet):
             child = collection.child_id
 
             pictograms = Pictogram.objects.filter(collection_id=collection)
-
+            
             if child.autism_level == 3:
                 pictograms = pictograms.filter(
                     arasaac_categories__icontains="core vocabulary"
