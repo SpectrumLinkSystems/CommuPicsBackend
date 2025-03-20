@@ -1,13 +1,12 @@
-from ast import List
+from asgiref.sync import sync_to_async  # Importa sync_to_async
 import json
 import os
 import random
 from dotenv import load_dotenv
-from asgiref.sync import sync_to_async
 import httpx
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
+from adrf.viewsets import ViewSet
 from apps.child.models.child import Child
 from apps.child.models.collection import Collection
 from apps.child.models.pictogram import Pictogram
@@ -39,7 +38,7 @@ class SentenceGameViewSet(ViewSet):
         }.get(autism_level, "oraciones simples.")
 
         payload = {
-            "model": "gpt-4",  # Puedes usar "gpt-3.5-turbo" si prefieres
+            "model": "gpt-4o-mini",  # Puedes usar "gpt-3.5-turbo" si prefieres
             "messages": [
                 {
                     "role": "user",
@@ -60,7 +59,6 @@ class SentenceGameViewSet(ViewSet):
             "max_tokens": 100,
         }
 
-
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 "https://api.openai.com/v1/chat/completions",
@@ -73,7 +71,6 @@ class SentenceGameViewSet(ViewSet):
             except json.JSONDecodeError:
                 return {"sentence": content_str, "words": content_str.split()}  # Fallback si no es JSON válido
     
-    @sync_to_async
     @action(detail=False, methods=["post"], url_path="generate_sentence_game")
     async def generate_sentence_game(self, request):
         try:
@@ -81,21 +78,21 @@ class SentenceGameViewSet(ViewSet):
             if not child_id:
                 return Response({"error": "El campo 'child_id' es requerido."}, status=400)
             
-            child = Child.objects.get(id=child_id)
+            # Usar sync_to_async para acceder al ORM de Django
+            child = await sync_to_async(Child.objects.get)(id=child_id)
             
             # Obtener la complejidad de la oración basada en el nivel de autismo
             autism_level = child.autism_level
             sentence_complexity = self.get_sentence_complexity(autism_level)
             
             # Obtener todas las colecciones del niño
-            collections = Collection.objects.filter(child_id=child)
-            collection_ids = collections.values_list('id', flat=True)  # Extraer los IDs de las colecciones
+            collections = await sync_to_async(Collection.objects.filter)(child_id=child)
+            collection_ids = await sync_to_async(list)(collections.values_list('id', flat=True))  # Extraer los IDs de las colecciones
 
             # Obtener todos los pictogramas de todas las colecciones del niño
-            pictograms = Pictogram.objects.filter(collection_id__in=collection_ids)
-            print("Pictogramas en las colecciones del niño:", pictograms.values_list("name", flat=True))
+            pictograms = await sync_to_async(Pictogram.objects.filter)(collection_id__in=collection_ids)
             
-            if not pictograms.exists():
+            if not await sync_to_async(pictograms.exists)():
                 return Response({"error": "No hay pictogramas disponibles para este niño."}, status=404)
 
             # Obtener pronombres y conjunciones de las colecciones por defecto
@@ -103,10 +100,10 @@ class SentenceGameViewSet(ViewSet):
             conjunctions = self.get_pictograms_by_category("Conjunciones")
 
             # Obtener el ID de la primera colección del niño
-            collection_id = collections.first().id
+            collection_id = await sync_to_async(lambda: collections.first().id)()
 
             # Generar una oración desordenada
-            sentence_pictograms = self.select_pictograms_for_sentence(
+            sentence_pictograms = await sync_to_async(self.select_pictograms_for_sentence)(
                 sentence_complexity,  # Complejidad de la oración
                 pictograms,           # Pictogramas disponibles
                 pronouns,             # Pronombres
@@ -168,8 +165,6 @@ class SentenceGameViewSet(ViewSet):
         return []
     
     def select_pictograms_for_sentence(self, complexity, pictograms, pronouns, conjunctions, collection_id):
-        print("Pictogramas disponibles:", pictograms.values_list("name", flat=True))
-        
         # Crear instancias de pictogramas como diccionarios
         def create_temp_pictogram(name, category):
             return {
@@ -195,10 +190,6 @@ class SentenceGameViewSet(ViewSet):
             verb = pictograms.filter(arasaac_categories__icontains="verb").first()
             obj = pictograms.filter(arasaac_categories__icontains="object").exclude(arasaac_categories__icontains="color").first()
             
-            print("Verbos encontrados:", verb)
-            print("Objetos encontrados:", obj)
-            
-            # Si no hay verbos u objetos, usar cualquier pictograma
             if not verb:
                 verb = pictograms.first()
             if not obj:
