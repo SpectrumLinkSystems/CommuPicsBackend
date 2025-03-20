@@ -1,37 +1,81 @@
+from ast import List
+import json
+import os
+import random
+from dotenv import load_dotenv
+from asgiref.sync import sync_to_async
+import httpx
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
-from django.db.models import Q
 from apps.child.models.child import Child
 from apps.child.models.collection import Collection
 from apps.child.models.pictogram import Pictogram
-import random
-
 from apps.child.serializers.pictogram_game_serializer import SentenceGamePictogramSerializer
 from apps.child.services.default_collections import DEFAULT_COLLECTIONS
 
+load_dotenv()
+
 class SentenceGameViewSet(ViewSet):
     
-    # Agregar OpenAI para mejorar la generación de oraciones (reemplazar con un servicio de IA)
-    # OPENAI_API_KEY = "your-openai-api-key" 
-    # Diccionario de conjugaciones de verbos (reemplazar con un servicio de conjugación de verbos)
-    VERB_CONJUGATIONS = {
-        "yo": {
-            "correr": "corro",
-            "comer": "como",
-            "saltar": "salto",
-            "Empujar": "empuja"
-        },
-        "él": {
-            "correr": "corre",
-            "comer": "come",
-            "saltar": "salta",
-            "Empujar": "empuja"
-        },
-    }
+    async def generate_sentence_with_openai(self, pictograms, autism_level):
+        """
+        Genera una oración con sentido y conjuga los verbos usando OpenAI.
+        Toma en cuenta el nivel de autismo para adaptar la complejidad de la oración.
+        """
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
+        }
+
+        # Crear una lista de nombres de pictogramas
+        pictogram_names = [pic.name for pic in pictograms]
+
+        # Definir la complejidad de la oración según el nivel de autismo
+        complexity_description = {
+            1: "oraciones muy simples, con sujeto + verbo + objeto, y palabras básicas.",
+            2: "oraciones un poco más complejas, con conectores como 'y' o 'en', y vocabulario un poco más amplio.",
+            3: "oraciones complejas, con adjetivos, conectores y estructura gramatical completa."
+        }.get(autism_level, "oraciones simples.")
+
+        payload = {
+            "model": "gpt-4",  # Puedes usar "gpt-3.5-turbo" si prefieres
+            "messages": [
+                {
+                    "role": "user",
+                    "content": f"""Eres un especialista en autismo que ayuda a niños a aprender a comunicarse.
+                    A partir de estos pictogramas: {', '.join(pictogram_names)}, genera una oración con sentido que un niño con autismo de nivel {autism_level} pueda entender.
+                    La oración debe ser {complexity_description}
+                    Además, conjuga los verbos correctamente según el sujeto.
+                    Devuelve la respuesta en formato JSON con dos campos:
+                    - 'sentence': La oración generada.
+                    - 'words': Un arreglo con las palabras de la oración ya conjugadas, en el orden correcto.
+                    Ejemplo de respuesta:
+                    {{
+                        "sentence": "Él corre en el parque",
+                        "words": ["Él", "corre", "en", "el", "parque"]
+                    }}"""
+                }
+            ],
+            "max_tokens": 100,
+        }
+
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://api.openai.com/v1/chat/completions",
+                headers=headers,
+                json=payload,
+            )
+            content_str = response.json()["choices"][0]["message"]["content"].strip()
+            try:
+                return json.loads(content_str)  # Parsear la respuesta JSON
+            except json.JSONDecodeError:
+                return {"sentence": content_str, "words": content_str.split()}  # Fallback si no es JSON válido
     
+    @sync_to_async
     @action(detail=False, methods=["post"], url_path="generate_sentence_game")
-    def generate_sentence_game(self, request):
+    async def generate_sentence_game(self, request):
         try:
             child_id = request.data.get("child_id")
             if not child_id:
@@ -39,17 +83,22 @@ class SentenceGameViewSet(ViewSet):
             
             child = Child.objects.get(id=child_id)
             
-            sentence_complexity = self.get_sentence_complexity(child.autism_level)
+            # Obtener la complejidad de la oración basada en el nivel de autismo
+            autism_level = child.autism_level
+            sentence_complexity = self.get_sentence_complexity(autism_level)
             
+            # Obtener todas las colecciones del niño
             collections = Collection.objects.filter(child_id=child)
-            collection_ids = collections.values_list('id', flat=True)
+            collection_ids = collections.values_list('id', flat=True)  # Extraer los IDs de las colecciones
 
+            # Obtener todos los pictogramas de todas las colecciones del niño
             pictograms = Pictogram.objects.filter(collection_id__in=collection_ids)
             print("Pictogramas en las colecciones del niño:", pictograms.values_list("name", flat=True))
             
             if not pictograms.exists():
                 return Response({"error": "No hay pictogramas disponibles para este niño."}, status=404)
 
+            # Obtener pronombres y conjunciones de las colecciones por defecto
             pronouns = self.get_pictograms_by_category("Pronombres")
             conjunctions = self.get_pictograms_by_category("Conjunciones")
 
@@ -67,61 +116,33 @@ class SentenceGameViewSet(ViewSet):
             if not sentence_pictograms:
                 return Response({"error": "No hay suficientes pictogramas para generar una oración."}, status=404)
             
-            # Guardar el orden correcto antes de mezclar
-            correct_order = []
-            for pic in sentence_pictograms:
-                if isinstance(pic, Pictogram) and hasattr(pic, 'id') and pic.id:
-                    correct_order.append(pic.id)
-                elif isinstance(pic, dict) and 'id' in pic:
-                    correct_order.append(pic['id'])
-                elif isinstance(pic, dict) and 'name' in pic:
-                    correct_order.append(pic['name'])
-                elif hasattr(pic, 'name'):
-                    correct_order.append(pic.name)
-                else:
-                    # Un identificador genérico si no hay otra opción
-                    correct_order.append(str(random.randint(10000, 99999)))
+            # Generar una oración con sentido y palabras conjugadas usando OpenAI
+            openai_response = await self.generate_sentence_with_openai(sentence_pictograms, autism_level)
+            generated_sentence = openai_response.get("sentence", "")
+            words = openai_response.get("words", [])
             
-            # Mezclar los pictogramas
-            shuffled_pictograms = self.shuffle_pictograms(sentence_pictograms)
+            # Guardar el orden correcto de las palabras
+            correct_order = words  # Usar las palabras ya conjugadas y ordenadas
             
-            # Convertir cada pictograma a un formato adecuado para la serialización
-            pictogram_data = []
-            for pic in shuffled_pictograms:
-                if isinstance(pic, Pictogram) and pic.id:
-                    # Si es un objeto Pictogram con ID, simplemente usar el objeto
-                    pictogram_data.append(pic)
-                elif isinstance(pic, dict):
-                    # Si ya es un diccionario, asegurarse de que tenga collection_id_id
-                    if 'collection_id_id' not in pic and 'collection_id' in pic:
-                        pic['collection_id_id'] = pic['collection_id']
-                    pictogram_data.append(pic)
-                else:
-                    # Si es un pictograma temporal, crear un diccionario con los datos
-                    try:
-                        data = {
-                            'name': pic.name if hasattr(pic, 'name') else "Pictograma",
-                            'image_url': pic.image_url if hasattr(pic, 'image_url') else "",
-                            'arasaac_id': pic.arasaac_id if hasattr(pic, 'arasaac_id') else "9999",
-                            'arasaac_categories': pic.arasaac_categories if hasattr(pic, 'arasaac_categories') else "",
-                            'collection_id_id': collection_id
-                        }
-                        pictogram_data.append(data)
-                    except Exception as e:
-                        print(f"Error procesando pictograma: {e}")
-                        print(f"Tipo de pictograma: {type(pic)}")
-                        # Si hay error, crear un pictograma genérico
-                        pictogram_data.append({
-                            'name': "Pictograma genérico",
-                            'image_url': "",
-                            'arasaac_id': "9999",
-                            'arasaac_categories': "",
-                            'collection_id_id': collection_id
-                        })
+            # Mezclar las palabras para el juego
+            shuffled_words = words.copy()
+            random.shuffle(shuffled_words)
+            
+            # Convertir cada palabra a un formato adecuado para la serialización
+            word_data = []
+            for word in shuffled_words:
+                word_data.append({
+                    "name": word,
+                    "image_url": "",  # Puedes agregar una URL de imagen si es necesario
+                    "arasaac_id": "9999",  # ID genérico
+                    "arasaac_categories": "",  # Categoría genérica
+                    "collection_id_id": collection_id
+                })
             
             return Response({
-                "shuffled_pictograms": SentenceGamePictogramSerializer(pictogram_data, many=True).data,
-                "correct_order": correct_order
+                "shuffled_words": SentenceGamePictogramSerializer(word_data, many=True).data,
+                "correct_order": correct_order,
+                "generated_sentence": generated_sentence  # Incluir la oración generada
             }, status=200)
         
         except Child.DoesNotExist:
@@ -137,17 +158,19 @@ class SentenceGameViewSet(ViewSet):
         elif autism_level == 3:
             return "complex"
         else:
-            return "simple"
+            return "simple"  # Valor por defecto
     
     def get_pictograms_by_category(self, category_name):
+        # Obtener pictogramas de una colección por defecto basada en el nombre de la categoría
         for collection in DEFAULT_COLLECTIONS:
             if collection["name"] == category_name:
                 return collection["pictograms"]
         return []
     
     def select_pictograms_for_sentence(self, complexity, pictograms, pronouns, conjunctions, collection_id):
-        #print("Pictogramas disponibles:", pictograms.values_list("name", flat=True))
-
+        print("Pictogramas disponibles:", pictograms.values_list("name", flat=True))
+        
+        # Crear instancias de pictogramas como diccionarios
         def create_temp_pictogram(name, category):
             return {
                 'name': name,
@@ -157,9 +180,10 @@ class SentenceGameViewSet(ViewSet):
                 'collection_id_id': collection_id
             }
         
+        # Convertir pronouns y conjunctions a instancias de Pictogram si son diccionarios
         def ensure_pictogram(pic):
             if isinstance(pic, dict):
-                return Pictogram(**pic)
+                return Pictogram(**pic)  # Crear una instancia temporal de Pictogram
             return pic
         
         pronouns = [ensure_pictogram(p) for p in pronouns]
@@ -168,15 +192,11 @@ class SentenceGameViewSet(ViewSet):
         if complexity == "simple":
             # Oraciones simples: Sujeto + Verbo + Objeto
             subject = random.choice(pronouns) if pronouns else create_temp_pictogram("Yo", "pronoun")
-            verb_list = list(pictograms.filter(arasaac_categories__icontains="verb"))
-            verb = random.choice(verb_list) if verb_list else None
-            obj_list = list(pictograms.filter(arasaac_categories__icontains="object"
-                                            ).exclude(arasaac_categories__icontains="color"
-                                            ).exclude(arasaac_categories__icontains="shape"))
-
-            obj = random.choice(obj_list) if obj_list else None
-            #print("Verbos encontrados:", verb)
-            #print("Objetos encontrados:", obj)
+            verb = pictograms.filter(arasaac_categories__icontains="verb").first()
+            obj = pictograms.filter(arasaac_categories__icontains="object").exclude(arasaac_categories__icontains="color").first()
+            
+            print("Verbos encontrados:", verb)
+            print("Objetos encontrados:", obj)
             
             # Si no hay verbos u objetos, usar cualquier pictograma
             if not verb:
@@ -186,9 +206,6 @@ class SentenceGameViewSet(ViewSet):
             
             if not verb or not obj:
                 return []
-            
-            if subject.name in self.VERB_CONJUGATIONS and verb.name in self.VERB_CONJUGATIONS[subject.name]:
-                verb.name = self.VERB_CONJUGATIONS[subject.name][verb.name]
             
             return [subject, verb, obj]
         
@@ -203,9 +220,6 @@ class SentenceGameViewSet(ViewSet):
             if not verb or not obj1 or not obj2:
                 return []
             
-            if subject.name in self.VERB_CONJUGATIONS and verb.name in self.VERB_CONJUGATIONS[subject.name]:
-                verb.name = self.VERB_CONJUGATIONS[subject.name][verb.name]
-            
             return [subject, verb, obj1, conjunction, obj2]
         
         elif complexity == "complex":
@@ -219,9 +233,6 @@ class SentenceGameViewSet(ViewSet):
             
             if not verb or not obj1 or not obj2 or not adjective:
                 return []
-            
-            if subject.name in self.VERB_CONJUGATIONS and verb.name in self.VERB_CONJUGATIONS[subject.name]:
-                verb.name = self.VERB_CONJUGATIONS[subject.name][verb.name]
             
             return [subject, verb, obj1, conjunction, adjective, obj2]
         
