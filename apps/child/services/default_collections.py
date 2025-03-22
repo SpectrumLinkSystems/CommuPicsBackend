@@ -192,8 +192,11 @@ DEFAULT_COLLECTIONS = [
         'pictograms': [
             {'name': 'Enfermo', 'image_url': 'https://static.arasaac.org/pictograms/28742/28742_2500.png', 'arasaac_id': '28742', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,health,medicine,disease,person,patient'},
             {'name': 'Roto', 'image_url': 'https://static.arasaac.org/pictograms/4736/4736_2500.png', 'arasaac_id': '4736', 'arasaac_categories': 'communication,language,adjective,qualifying adjective'},
-            {'name': 'Caliente', 'image_url': 'https://static.arasaac.org/pictograms/4583/4583_2500.png', 'arasaac_id': '4583', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,beverage'},
-            {'name': 'Frío', 'image_url': 'https://static.arasaac.org/pictograms/4652/4652_2500.png', 'arasaac_id': '4652', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,beverage'}
+            {'name': 'Grande', 'image_url': 'https://static.arasaac.org/pictograms/4658/4658_2500.png', 'arasaac_id': '4658', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,size,core vocabulary,object'},
+            {'name': 'Pequeño', 'image_url': 'https://static.arasaac.org/pictograms/4716/4716_2500.png', 'arasaac_id': '4716', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,size,core vocabulary,object'},
+            {'name': 'Delicioso', 'image_url': 'https://static.arasaac.org/pictograms/32340/32340_2500.png', 'arasaac_id': '32340', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,taste'},
+            {'name': 'Frío', 'image_url': 'https://static.arasaac.org/pictograms/26865/26865_2500.png', 'arasaac_id': '26865', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,physics,feeding,cookery,meteorology'},
+            {'name': 'Caliente', 'image_url': 'https://static.arasaac.org/pictograms/26716/26716_2500.png', 'arasaac_id': '26716', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,physics,feeding,cookery'}
         ]
     },
     # Colección 9 - Verbos
@@ -205,7 +208,7 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Tocar', 'image_url': 'https://static.arasaac.org/pictograms/34098/34098_2500.png', 'arasaac_id': '34098', 'arasaac_categories': 'communication,language,verb'},
             {'name': 'Abrir', 'image_url': 'https://static.arasaac.org/pictograms/24825/24825_2500.png', 'arasaac_id': '24825', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
             {'name': 'Cerrar', 'image_url': 'https://static.arasaac.org/pictograms/24976/24976_2500.png', 'arasaac_id': '24976', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
-            {'name': 'Agitar', 'image_url': 'https://static.arasaac.org/pictograms/5365/5365_2500.png', 'arasaac_id': '5365', 'arasaac_categories': 'communication,language,verb,feeding,food,beverage'}
+            {'name': 'Limpiar', 'image_url': 'https://static.arasaac.org/pictograms/3351/3351_2500.png', 'arasaac_id': '3351', 'arasaac_categories': 'communication,language,verb,usual verbs,object,cleaning product,core vocabulary'},
         ]
     },
     # Colección 9 - Transporte
@@ -241,26 +244,17 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'}
         ]
     },
-    # Colección 10 - pronombres y conunciones para hacer oraciones
+    # Colección 10 - pronombres  para hacer oraciones
     {
         'name': 'Pronombres',
         'image_url': 'https://static.arasaac.org/pictograms/7185/7185_2500.png',
         'pictograms': [
-            {'name': 'él', 'image_url': 'https://static.arasaac.org/pictograms/6480/6480_2500.png', 'arasaac_id': '6480', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
-            {'name': 'ella', 'image_url': 'https://static.arasaac.org/pictograms/7028/7028_2500.png', 'arasaac_id': '7028', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
-            {'name': 'yo', 'image_url': 'https://static.arasaac.org/pictograms/31807/31807_2500.png', 'arasaac_id': '31807', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,document'},
-            {'name': 'tú', 'image_url': 'https://static.arasaac.org/pictograms/31801/31801_2500.png', 'arasaac_id': '31801', 'arasaac_categories': 'communication,language,pronoun,personal pronoun'},
-            {'name': 'mamá', 'image_url': 'https://static.arasaac.org/pictograms/2458/2458_2500.png', 'arasaac_id': '2458', 'arasaac_categories': 'person,family,core vocabulary,pronoun'},
-            {'name': 'papá', 'image_url': 'https://static.arasaac.org/pictograms/31146/31146_2500.png', 'arasaac_id': '31146', 'arasaac_categories': 'person,family,core vocabulary,pronoun'},
-        ]
-    },
-    {
-        'name': 'Conjunciones',
-        'image_url': 'https://static.arasaac.org/pictograms/3047/3047_2500.png',
-        'pictograms': [
-            {'name': 'y', 'image_url': 'https://static.arasaac.org/pictograms/3047/3047_2500.png', 'arasaac_id': '3047', 'arasaac_categories': 'communication,language,alphabet,letter,conjunction,copulative conjunction'},
-            {'name': 'o', 'image_url': 'https://static.arasaac.org/pictograms/3037/3037_2500.png', 'arasaac_id': '3037', 'arasaac_categories': 'communication,language,alphabet,letter,conjunction,copulative conjunction,disjunctive conjunction'},
-            {'name': 'pero', 'image_url': 'https://static.arasaac.org/pictograms/11377/11377_2500.png', 'arasaac_id': '11377', 'arasaac_categories': 'communication,language,conjunction,adversative conjunction'},
+            {'name': 'Él', 'image_url': 'https://static.arasaac.org/pictograms/6480/6480_2500.png', 'arasaac_id': '6480', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,core vocabulary'},
+            {'name': 'Ella', 'image_url': 'https://static.arasaac.org/pictograms/7028/7028_2500.png', 'arasaac_id': '7028', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,core vocabulary'},
+            {'name': 'Yo', 'image_url': 'https://static.arasaac.org/pictograms/31807/31807_2500.png', 'arasaac_id': '31807', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,document,core vocabulary'},
+            {'name': 'Tú', 'image_url': 'https://static.arasaac.org/pictograms/31801/31801_2500.png', 'arasaac_id': '31801', 'arasaac_categories': 'communication,language,pronoun,personal pronoun,core vocabulary'},
+            {'name': 'Mamá', 'image_url': 'https://static.arasaac.org/pictograms/2458/2458_2500.png', 'arasaac_id': '2458', 'arasaac_categories': 'person,family,core vocabulary,pronoun,core vocabulary'},
+            {'name': 'Papá', 'image_url': 'https://static.arasaac.org/pictograms/31146/31146_2500.png', 'arasaac_id': '31146', 'arasaac_categories': 'person,family,core vocabulary,pronoun,core vocabulary'},
         ]
     }
 ]
