@@ -23,7 +23,7 @@ class SentenceGameViewSet(ViewSet):
 
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer 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",
+            "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
         }
 
         pictogram_names = [pic.name for pic in pictograms]
