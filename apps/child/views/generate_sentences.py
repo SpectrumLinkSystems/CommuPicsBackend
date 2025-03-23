@@ -1,7 +1,8 @@
-from asgiref.sync import sync_to_async  # Importa sync_to_async
+from asgiref.sync import sync_to_async
 import json
 import os
 import random
+import spacy
 from dotenv import load_dotenv
 import httpx
 from rest_framework.decorators import action
@@ -14,35 +15,37 @@ from apps.child.serializers.pictogram_game_serializer import SentenceGamePictogr
 
 load_dotenv()
 
+nlp = spacy.load("es_core_news_sm")
+
 class SentenceGameViewSet(ViewSet):
     
     async def generate_sentence_with_openai(self, pictograms, pronombres, autism_level):
 
         headers = {
             "Content-Type": "application/json",
-            "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
+            "Authorization": f"Bearer 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",
         }
-        
+
         pictogram_names = [pic.name for pic in pictograms]
         pronombres_names = [pronombre.name for pronombre in pronombres]
 
-        if autism_level == 1:
+        if autism_level == 3:
             complexity_description = (
                 "Oraciones muy simples con estructura 'sujeto + verbo + objeto'. "
                 "No uses conjunciones. Usa solo los siguientes sujetos: " + ", ".join(pronombres_names) + ". "
-                "Conjuga los verbos correctamente. Ejemplo: 'Yo como pan'."
+                "Conjuga los verbos correctamente. Ejemplo: 'Yo Como Pan'."
             )
         elif autism_level == 2:
             complexity_description = (
                 "Oraciones con cantidades y estructura simple. "
                 "Usa solo los siguientes sujetos: " + ", ".join(pronombres_names) + ". "
-                "Conjuga los verbos correctamente. Ejemplo: 'Yo quiero 2 galletas'."
+                "Conjuga los verbos correctamente. Ejemplo: 'Yo Quiero Dos Galletas'."
             )
-        elif autism_level == 3:
+        elif autism_level == 1:
             complexity_description = (
                 "Oraciones más elaboradas con adjetivos relacionados al objeto. "
                 "Usa solo los siguientes sujetos: " + ", ".join(pronombres_names) + ". "
-                "Conjuga los verbos correctamente. Ejemplo: 'Mamá come 1 galleta caliente'."
+                "Conjuga los verbos correctamente. Ejemplo: 'Mamá Come Uno Galleta Caliente'."
             )
         else:
             complexity_description = "Oraciones simples."
@@ -56,16 +59,17 @@ class SentenceGameViewSet(ViewSet):
                     A partir de estos pictogramas: {', '.join(pictogram_names)}, genera una oración corta con sentido para un niño con autismo de nivel {autism_level}.
                     La oración debe seguir la siguiente directriz de complejidad: {complexity_description}.
                     Usa solo los siguientes sujetos: {', '.join(pronombres_names)}.
-                    Conjuga los verbos correctamente según el sujeto.
-                    Si hay verbos en infinitivo (como 'dormir', 'querer', 'lavar'), conjúgalos adecuadamente.
+                    **Usa solo las siguientes palabras: {', '.join(pictogram_names)}.**
+                    **Los verbos deben estar en infinitivo (por ejemplo, "Comer" en lugar de "Come").**
                     **Asegúrate de que la primera letra de cada palabra en la oración sea mayúscula.**
+                    **Los números deben estar en su forma masculina (por ejemplo, "Uno" en lugar de "Una").**
                     Devuelve **solo un objeto JSON** con dos campos:
                     - 'sentence': La oración generada.
                     - 'words': Un arreglo con las palabras de la oración ya conjugadas, en el orden correcto.
                     Ejemplo de respuesta:
                     {{
-                        "sentence": "Yo Quiero Una Galleta",
-                        "words": ["Yo", "Quiero", "Una", "Galleta"]
+                        "sentence": "Yo Querer Uno Galleta",
+                        "words": ["Yo", "Querer", "Uno", "Galleta"]
                     }}"""
                 }
             ],
@@ -78,13 +82,12 @@ class SentenceGameViewSet(ViewSet):
                 headers=headers,
                 json=payload,
             )
-            print("Respuesta de OpenAI:", response.json())
+            #print("Respuesta de OpenAI:", response.json())
             content_str = response.json()["choices"][0]["message"]["content"].strip()
             try:
                 return json.loads(content_str)
             except json.JSONDecodeError:
                 return {"sentence": content_str, "words": content_str.split()}
-
 
     @action(detail=False, methods=["post"], url_path="generate_sentence_game")
     async def generate_sentence_game(self, request):
@@ -145,9 +148,11 @@ class SentenceGameViewSet(ViewSet):
                         "arasaac_categories": "",
                         "collection_id": collection_id
                     })
+                    
+            serialized_data = SentenceGamePictogramSerializer(word_data, many=True).data
             
             return Response({
-                "shuffled_words": SentenceGamePictogramSerializer(word_data, many=True).data,
+                "shuffled_words": serialized_data,
                 "correct_order": words,
                 "generated_sentence": generated_sentence
             }, status=200)
