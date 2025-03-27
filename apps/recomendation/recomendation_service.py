@@ -1,14 +1,21 @@
 import pandas as pd
-import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from django.db.models import Sum
+from apps.child.models.collection import Collection
 from apps.child.models.pictogram import Pictogram, PictogramUsage
 from datetime import datetime
 
 def get_pictogram_recommendations(child_id, selected_pictogram_id):
 
     selected_pictogram = Pictogram.objects.get(id=selected_pictogram_id)
+    
+        # Obtener las colecciones asociadas al niño específico
+    collections = Collection.objects.filter(child_id=child_id)
+    
+    # Obtener los IDs de las colecciones asociadas al niño
+    collection_ids = collections.values_list('id', flat=True)
+    
     
     pictogram_usage = PictogramUsage.objects.filter(child_id=child_id).select_related('pictogram')
     
@@ -22,7 +29,7 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
             'pictogram': pictogram
         })
     
-    all_pictograms = Pictogram.objects.all()
+    all_pictograms = Pictogram.objects.filter(collection_id__in=collection_ids)
     
     default_pictograms = [
         {

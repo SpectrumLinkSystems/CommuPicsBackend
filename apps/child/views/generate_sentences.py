@@ -2,7 +2,6 @@ from asgiref.sync import sync_to_async
 import json
 import os
 import random
-import spacy
 from dotenv import load_dotenv
 import httpx
 from rest_framework.decorators import action
@@ -14,8 +13,6 @@ from apps.child.models.pictogram import Pictogram
 from apps.child.serializers.pictogram_game_serializer import SentenceGamePictogramSerializer
 
 load_dotenv()
-
-nlp = spacy.load("es_core_news_sm")
 
 class SentenceGameViewSet(ViewSet):
     
@@ -39,7 +36,7 @@ class SentenceGameViewSet(ViewSet):
             complexity_description = (
                 "Oraciones con cantidades y estructura simple. "
                 "Usa solo los siguientes sujetos: " + ", ".join(pronombres_names) + ". "
-                "Conjuga los verbos correctamente. Ejemplo: 'Yo Quiero Dos Galletas'."
+                "Conjuga los verbos correctamente. Ejemplo: 'Yo Quiero Dos Galleta'."
             )
         elif autism_level == 1:
             complexity_description = (
@@ -63,6 +60,7 @@ class SentenceGameViewSet(ViewSet):
                     **Los verbos deben estar en infinitivo (por ejemplo, "Comer" en lugar de "Come").**
                     **Asegúrate de que la primera letra de cada palabra en la oración sea mayúscula.**
                     **Los números deben estar en su forma masculina (por ejemplo, "Uno" en lugar de "Una").**
+                    **Los sustantivos deben permanecer en singular, incluso si la cantidad es mayor a uno (por ejemplo, "Tres Zanahoria" en lugar de "Tres Zanahorias").**
                     Devuelve **solo un objeto JSON** con dos campos:
                     - 'sentence': La oración generada.
                     - 'words': Un arreglo con las palabras de la oración ya conjugadas, en el orden correcto.
@@ -82,7 +80,7 @@ class SentenceGameViewSet(ViewSet):
                 headers=headers,
                 json=payload,
             )
-            #print("Respuesta de OpenAI:", response.json())
+            print("Respuesta de OpenAI:", response.json())
             content_str = response.json()["choices"][0]["message"]["content"].strip()
             try:
                 return json.loads(content_str)
