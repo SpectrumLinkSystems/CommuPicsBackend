@@ -12,4 +12,4 @@ class Child(models.Model):
     autism_level = models.IntegerField()
     avatar = models.CharField(max_length=255)
     parent_id = models.ForeignKey(Parent, on_delete=models.CASCADE)
-    therapists_id = models.ForeignKey(Therapist, null=True, on_delete=models.SET_NULL)
+    therapists_id = models.ForeignKey(Therapist, null=True, on_delete=models.SET_NULL, related_name='children')

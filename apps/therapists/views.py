@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets, status
@@ -8,6 +9,10 @@ from pyzbar.pyzbar import decode
 from PIL import Image
 import cv2
 import numpy as np
+
+from apps.child.models.child import Child
+from apps.child.serializers.child_serializer import ChildSerializer
+from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSerializer
 
 from .models import Therapist
 from .serializers import TherapistSerializer
@@ -27,16 +32,59 @@ class TherapistViewSet(viewsets.ModelViewSet):
         serializer = TherapistSerializer(therapists, many=True)
         return Response(serializer.data)
 
-    def assign_child(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
+    @action(detail=True, methods=['post'], url_path='assign-child')
+    def assign_child(self, request, pk=None):
+        """
+        Asigna un niño existente a este terapeuta via POST
+        Ejemplo de body: {"child_id": 1}
+        """
+        therapist = self.get_object()
         child_id = request.data.get('child_id')
-
-        therapist = get_object_or_404(Therapist, id=therapist_id)
-        child = get_object_or_404(Child, id=child_id)
-
-        child.therapists.add(therapist)
         
-        return Response({"message": f"Child {child.name} assigned to therapist {therapist.name}"}, status=status.HTTP_200_OK)
+        if not child_id:
+            return Response(
+                {"error": "El campo 'child_id' es requerido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            child = Child.objects.get(id=child_id)
+            
+            # Asignación directa (1 terapeuta → muchos niños)
+            child.therapists_id = therapist
+            child.save()
+            
+            return Response(
+                {
+                    "status": "success",
+                    "message": f"Niño {child.name} asignado al terapeuta {therapist.name}",
+                    "child_id": child.id,
+                    "therapist_id": therapist.id
+                },
+                status=status.HTTP_200_OK
+            )
+            
+        except Child.DoesNotExist:
+            return Response(
+                {"error": f"No existe un niño con id {child_id}"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    @action(detail=True, methods=['get'])
+    def children(self, request, pk=None):
+        """
+        Get all children associated with this therapist
+        """
+        therapist = get_object_or_404(Therapist, id=pk)
+        children = therapist.children.all()  # Using the related_name
+        
+        serializer = ChildSerializer(children, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, *args, **kwargs):
         therapist_id = self.kwargs.get('pk')
@@ -63,13 +111,12 @@ class TherapistViewSet(viewsets.ModelViewSet):
         else:
             return Response({"error": "Therapist not found"}, status=status.HTTP_404_NOT_FOUND)
     
-    def child_tracking(self, request, *args, **kwargs):
-        therapist_id = self.kwargs.get('pk')
-        child_id = request.data.get('child_id')
-
-        therapist = get_object_or_404(Therapist, id=therapist_id)
+    @action(detail=True, methods=['get'])
+    def child_tracking(self, request, pk=None, child_id=None):
+        therapist = get_object_or_404(Therapist, id=pk)
         child = get_object_or_404(Child, id=child_id)
-        if therapist not in child.therapists.all():
+        
+        if child.therapist != therapist:
             raise PermissionDenied("You do not have access to this child's data.")
 
         pictogram_usages = PictogramUsage.objects.filter(child=child)

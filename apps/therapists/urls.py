@@ -11,7 +11,7 @@ therapists_router = NestedDefaultRouter(router, r'therapists', lookup='therapist
 therapists_router.register(r'children', ChildViewSet, basename='therapist-children')
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('', include(therapists_router.urls)),
-    path('therapists/<int:pk>/child_tracking/', TherapistViewSet.as_view({'post': 'child_tracking'}), name='child_tracking'),
-]
+    path('therapists/<int:pk>/assign-child/', 
+         TherapistViewSet.as_view({'post': 'assign_child'}),
+         name='therapist-assign-child'),
+] + router.urls
