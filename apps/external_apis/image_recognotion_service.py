@@ -4,11 +4,13 @@ import os
 from dotenv import load_dotenv, dotenv_values
 import httpx
 
+from apps.external_apis.arasaac import ArasaacService
+
 
 class ImageRecognitionService:
-    async def recognize_image(self, image_url, collections:List):
+    @staticmethod
+    async def recognize_image(image_url, collections):
         load_dotenv()
-        #return json.dumps(collections)
 
         headers = {
             "Content-Type": "application/json",
@@ -22,7 +24,7 @@ class ImageRecognitionService:
                     "role": "user",
                     "content": [
                         {
-                            "type": "text", 
+                            "type": "text",
                             "text": "A partir de este momento serás un especialista en autismo que ayudará a un niño a determinar qué objeto representa la siguiente imagen con el fin de que este niño pueda agregar un pictograma a su cuaderno PECS"},
                         {
                             "type": "image_url",
@@ -68,9 +70,21 @@ class ImageRecognitionService:
                 json=payload,
             )
             content_str = response.json()["choices"][0]["message"]["content"].strip("```json\n")
-            
+
             try:
                 json_content = json.loads(content_str)
-                return json_content
             except json.JSONDecodeError as e:
                 print("Error al decodificar el JSON:", e)
+
+            new_collections = []
+            for name in json_content.get("new_collections", []):
+                collection = await ArasaacService.get_data_for_new_collections(name)
+                new_collections.append(collection)
+            results = await ArasaacService.get_data_for_pictogram(json_content["results"]["name"])
+
+        final_response = {
+            "recomendations": json_content.get("recomendations", []),
+            "new_collections": new_collections,
+            "results": results,
+        }
+        return final_response

@@ -152,3 +152,11 @@ def generar_qr(id_nino, nombre_archivo="qr_nino.png"):
     img.save(nombre_archivo)
 
     return {"qr_code": img_base64, "message": f"QR generado para el niño {child.name}."}
+
+
+def get_collections_by_child_id(child_id):
+    try:
+        collections = Collection.objects.filter(child_id=child_id)
+        return collections
+    except ObjectDoesNotExist:
+        return None

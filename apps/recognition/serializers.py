@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-class RecognotionSerializer(serializers.Serializer):
-    image = serializers.CharField(max_length=255)
-    class Meta:
-        fields = '__all__'
+
+class RecognitionRequestSerializer(serializers.Serializer):
+    child_id = serializers.IntegerField(required=True)
+    image_url = serializers.CharField(required=True, max_length=255)

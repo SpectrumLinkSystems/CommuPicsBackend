@@ -32,3 +32,36 @@ class ArasaacService:
         first_object = json_data[0]
         got_id = first_object['_id']
         return got_id
+
+
+    @staticmethod
+    async def get_data_for_new_collections(name):
+        json_data = await ArasaacService.search_pictograms_by_word(name)
+
+        if not json_data:
+            return None
+
+        first_pictogram = json_data[0]
+
+        arasaac_id = first_pictogram["_id"]
+        image_url = f"https://static.arasaac.org/pictograms/{arasaac_id}/{arasaac_id}_2500.png"
+        return {
+            "name": name,
+            "image_url": image_url,
+        }
+
+    @staticmethod
+    async def get_data_for_pictogram(name):
+        json_data = await ArasaacService.search_pictograms_by_word(name)
+        if not json_data:
+            return None
+        first_pictogram = json_data[0]
+        arasaac_id = first_pictogram["_id"]
+        image_url = f"https://static.arasaac.org/pictograms/{arasaac_id}/{arasaac_id}_2500.png"
+        arasaac_categories = first_pictogram["tags"]
+        return {
+            "name": name,
+            "image_url": image_url,
+            "arasaac_id": arasaac_id,
+            "arasaac_categories": arasaac_categories,
+        }
