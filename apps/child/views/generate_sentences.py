@@ -36,7 +36,7 @@ class SentenceGameViewSet(ViewSet):
             complexity_description = (
                 "Oraciones con cantidades y estructura simple. "
                 "Usa solo los siguientes sujetos: " + ", ".join(pronombres_names) + ". "
-                "Conjuga los verbos correctamente. Ejemplo: 'Yo Quiero Dos Galleta'."
+                "Conjuga los verbos correctamente. Ejemplo: 'Yo Como Dos Galleta'."
             )
         elif autism_level == 1:
             complexity_description = (
@@ -60,14 +60,16 @@ class SentenceGameViewSet(ViewSet):
                     **Los verbos deben estar en infinitivo (por ejemplo, "Comer" en lugar de "Come").**
                     **Asegúrate de que la primera letra de cada palabra en la oración sea mayúscula.**
                     **Los números deben estar en su forma masculina (por ejemplo, "Uno" en lugar de "Una").**
-                    **Los sustantivos deben permanecer en singular, incluso si la cantidad es mayor a uno (por ejemplo, "Tres Zanahoria" en lugar de "Tres Zanahorias").**
+                    **Los sustantivos (objetos, alimentos, etc) deben permanecer en singular, incluso si la cantidad es mayor a uno (por ejemplo, "Tres Zanahoria" en lugar de "Tres Zanahorias").**
+                    **Usa sustantivos y verbos diferentes que el niño tenga en cada oración generada.**
+                    **Las oraciones estarán en singular.**
                     Devuelve **solo un objeto JSON** con dos campos:
                     - 'sentence': La oración generada.
                     - 'words': Un arreglo con las palabras de la oración ya conjugadas, en el orden correcto.
                     Ejemplo de respuesta:
                     {{
-                        "sentence": "Yo Querer Uno Galleta",
-                        "words": ["Yo", "Querer", "Uno", "Galleta"]
+                        "sentence": "Yo Comer Uno Galleta",
+                        "words": ["Yo", "Comer", "Uno", "Galleta"]
                     }}"""
                 }
             ],
