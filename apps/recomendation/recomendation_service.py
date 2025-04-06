@@ -14,10 +14,8 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
 
     selected_pictogram = Pictogram.objects.get(id=selected_pictogram_id)
     
-    # Obtener las colecciones asociadas al niño específico
     collections = Collection.objects.filter(child_id=child_id)
-    
-    # Obtener los IDs de las colecciones asociadas al niño
+
     collection_ids = collections.values_list('id', flat=True)
     
     pictogram_usage = PictogramUsage.objects.filter(child_id=child_id).select_related('pictogram')
@@ -46,7 +44,6 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
     
     all_pictograms = used_pictograms + default_pictograms
     
-    # Filtrar pictogramas que comparten al menos 2 categorías
     relevant_pictograms = [
         pic for pic in all_pictograms
         if pic['pictogram'].id != selected_pictogram_id and
@@ -56,13 +53,11 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
     if not relevant_pictograms:
         return {"error": "No hay pictogramas relevantes para recomendar (que compartan al menos 2 categorías)."}
     
-    # Preprocesamiento de texto para TF-IDF
     vectorizer = TfidfVectorizer()
     tfidf_matrix = vectorizer.fit_transform([pic['arasaac_categories'] for pic in relevant_pictograms])
     
     similarity_matrix = cosine_similarity(tfidf_matrix)
 
-    # Encontrar el índice del pictograma seleccionado (para calcular similitudes)
     selected_categories = selected_pictogram.arasaac_categories
     selected_idx = None
     max_shared = -1
@@ -76,7 +71,6 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
     sim_scores = list(enumerate(similarity_matrix[selected_idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     
-    # Aplicar ponderación por uso
     weighted_scores = []
     for idx, score in sim_scores:
         pictogram = relevant_pictograms[idx]
@@ -86,7 +80,6 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
     
     weighted_scores = sorted(weighted_scores, key=lambda x: x[1], reverse=True)
     
-    # Seleccionar los mejores pictogramas
     top_pictograms = []
     seen_ids = set()
     for idx, _ in weighted_scores:
@@ -97,7 +90,6 @@ def get_pictogram_recommendations(child_id, selected_pictogram_id):
         if len(top_pictograms) >= 6:
             break
     
-    # Formatear las recomendaciones
     recommendations = [
         {
             "child": child_id,
