@@ -2,13 +2,8 @@ from adrf import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
-from apps.recomendation.recomendation_service import get_pictogram_recommendations
-from apps.child.serializers.pictogram_serializer import (
-    CreatePictogramSerializer, PictogramSerializer)
-from apps.child.services.pictogram_service import PictogramService
-from apps.child.models.pictogram import PictogramUsage
 from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSerializer
-from apps.child.services.pictogram_service import PictogramService
+from apps.games.recomendation.recomendation_service import get_pictogram_recommendations
 
 
 class RecomendationView(viewsets.ModelViewSet):

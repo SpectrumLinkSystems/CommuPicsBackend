@@ -1,7 +1,5 @@
-import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from django.db.models import Sum
 from apps.child.models.collection import Collection
 from apps.child.models.pictogram import Pictogram, PictogramUsage
 from datetime import datetime
