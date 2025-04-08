@@ -11,6 +11,7 @@ import cv2
 import numpy as np
 
 from apps.child.models.child import Child
+from apps.child.models.pictogram import PictogramUsage
 from apps.child.serializers.child_serializer import ChildSerializer
 from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSerializer
 
@@ -31,13 +32,9 @@ class TherapistViewSet(viewsets.ModelViewSet):
         therapists = get_all_therapists()
         serializer = TherapistSerializer(therapists, many=True)
         return Response(serializer.data)
-
+    
     @action(detail=True, methods=['post'], url_path='assign-child')
     def assign_child(self, request, pk=None):
-        """
-        Asigna un niño existente a este terapeuta via POST
-        Ejemplo de body: {"child_id": 1}
-        """
         therapist = self.get_object()
         child_id = request.data.get('child_id')
         
@@ -50,16 +47,24 @@ class TherapistViewSet(viewsets.ModelViewSet):
         try:
             child = Child.objects.get(id=child_id)
             
-            # Asignación directa (1 terapeuta → muchos niños)
+            if child.therapists_id == therapist:
+                return Response(
+                    {
+                        "success": False,
+                        "child_id": child.id,
+                        "message": f"El niño {child.name} ya está asignado a este terapeuta"
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+                
             child.therapists_id = therapist
             child.save()
             
             return Response(
                 {
-                    "status": "success",
-                    "message": f"Niño {child.name} asignado al terapeuta {therapist.name}",
+                    "success": True,
                     "child_id": child.id,
-                    "therapist_id": therapist.id
+                    "message": f"Niño {child.name} asignado correctamente"
                 },
                 status=status.HTTP_200_OK
             )
@@ -77,11 +82,9 @@ class TherapistViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def children(self, request, pk=None):
-        """
-        Get all children associated with this therapist
-        """
+
         therapist = get_object_or_404(Therapist, id=pk)
-        children = therapist.children.all()  # Using the related_name
+        children = therapist.children.all()
         
         serializer = ChildSerializer(children, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -152,8 +155,8 @@ class TherapistViewSet(viewsets.ModelViewSet):
     )
     @action(detail=False, methods=["get"])
     def escanear_qr_camara(self, request):
-        """Escanea un código QR en tiempo real usando la cámara."""
-        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Evita errores en Windows
+
+        cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
         if not cap.isOpened():
             return Response({"error": "No se pudo acceder a la cámara"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
