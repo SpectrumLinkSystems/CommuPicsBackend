@@ -28,6 +28,15 @@ def assign_child_to_therapist(therapist_id, child_id):
     except (Therapist.DoesNotExist, Child.DoesNotExist):
         return False
 
+def unassign_child_from_therapist(therapist_id, child_id):
+    try:
+        child = Child.objects.get(id=child_id, therapists_id=therapist_id)
+        child.therapists_id = None
+        child.save()
+        return True
+    except Child.DoesNotExist:
+        return False
+    
 def get_therapist_by_id(therapist_id):
     try:
         return Therapist.objects.get(id=therapist_id)

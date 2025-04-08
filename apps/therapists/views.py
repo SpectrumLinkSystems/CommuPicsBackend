@@ -17,7 +17,7 @@ from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSeri
 
 from .models import Therapist
 from .serializers import TherapistSerializer
-from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id, escanear_qr)
+from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id, unassign_child_from_therapist)
 
 class TherapistViewSet(viewsets.ModelViewSet):
     queryset = Therapist.objects.all()
@@ -79,6 +79,30 @@ class TherapistViewSet(viewsets.ModelViewSet):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            
+    @action(detail=True, methods=['post'], url_path='unassign-child')
+    def unassign_child(self, request, pk=None):
+        therapist_id = pk
+        child_id = request.data.get('child_id')
+
+        if not child_id:
+            return Response(
+                {"error": "El campo 'child_id' es requerido"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        success = unassign_child_from_therapist(therapist_id, child_id)
+
+        if success:
+            return Response(
+                {"success": True, "message": f"Niño con id {child_id} desasignado correctamente"},
+                status=status.HTTP_200_OK
+            )
+        return Response(
+            {"success": False, "message": f"No se pudo desasignar al niño con id {child_id} del terapeuta"},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
 
     @action(detail=True, methods=['get'])
     def children(self, request, pk=None):
