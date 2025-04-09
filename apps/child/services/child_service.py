@@ -1,5 +1,3 @@
-from typing import List, Any
-
 from django.db.models import ObjectDoesNotExist, QuerySet
 from django.db import transaction
 from apps.child.models import Child, Collection
@@ -9,9 +7,6 @@ from .default_collections import DEFAULT_COLLECTIONS
 import qrcode
 from io import BytesIO
 import base64
-from pyzbar.pyzbar import decode
-from PIL import Image
-import cv2
 
 
 def create_child_for_parent(parent_id, child_data):

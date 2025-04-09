@@ -2,13 +2,8 @@ from django.shortcuts import get_object_or_404
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets, status
-from rest_framework.parsers import MultiPartParser
-from rest_framework.decorators import action, api_view, parser_classes
+from rest_framework.decorators import action
 from rest_framework.response import Response
-from pyzbar.pyzbar import decode
-from PIL import Image
-import cv2
-import numpy as np
 
 from apps.child.models.child import Child
 from apps.child.models.pictogram import PictogramUsage
