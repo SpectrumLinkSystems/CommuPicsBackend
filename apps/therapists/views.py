@@ -4,12 +4,11 @@ from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+import cv2
 from apps.child.models.child import Child
 from apps.child.models.pictogram import PictogramUsage
 from apps.child.serializers.child_serializer import ChildSerializer
 from apps.child.serializers.pictogram_usage_serializer import PictogramUsageSerializer
-
 from .models import Therapist
 from .serializers import TherapistSerializer
 from .services import (create_therapist, get_all_therapists, get_therapist_by_id, update_therapist, delete_therapist, get_therapist_by_firebase_id, unassign_child_from_therapist)
