@@ -1,8 +1,8 @@
-from ast import List
 import json
 import os
-from dotenv import load_dotenv, dotenv_values
+
 import httpx
+from dotenv import load_dotenv
 
 from apps.external_apis.arasaac import ArasaacService
 
@@ -25,7 +25,8 @@ class ImageRecognitionService:
                     "content": [
                         {
                             "type": "text",
-                            "text": "A partir de este momento serás un especialista en autismo que ayudará a un niño a determinar qué objeto representa la siguiente imagen con el fin de que este niño pueda agregar un pictograma a su cuaderno PECS"},
+                            "text": "A partir de este momento serás un especialista en autismo que ayudará a un niño a determinar qué objeto representa la siguiente imagen con el fin de que este niño pueda agregar un pictograma a su cuaderno PECS",
+                        },
                         {
                             "type": "image_url",
                             "image_url": {
@@ -35,7 +36,8 @@ class ImageRecognitionService:
                         },
                         {
                             "type": "text",
-                            "text": f"El niño cuenta con las siguientes colecciones: {json.dumps(collections, indent=4)}" + """ \n
+                            "text": f"El niño cuenta con las siguientes colecciones: {json.dumps(collections, indent=4)}"
+                            + """ \n
                             Necesito que escojas la o las colecciones a las que el objeto reconocido pueda ingresar.
                             En el caso de que el objeto no encaje en ninguna de las colecciones existentes, recomendarás nuevas colecciones.
                             Quiero que la respuesta a esto SOLO sea un json que conserve la estructura de una colección existente.
@@ -55,7 +57,9 @@ class ImageRecognitionService:
                                     "name": "NOMBRE DEL OBJETO RECONOCIDO"
                                 }
                             }
-                            """
+                            Toma en cuenta las siguientes indicaciones adicionales:
+                                El nombre del objeto a reconocer debe estar en español
+                            """,
                         },
                     ],
                 }
@@ -69,7 +73,9 @@ class ImageRecognitionService:
                 headers=headers,
                 json=payload,
             )
-            content_str = response.json()["choices"][0]["message"]["content"].strip("```json\n")
+            content_str = response.json()["choices"][0]["message"]["content"].strip(
+                "```json\n"
+            )
 
             try:
                 json_content = json.loads(content_str)
@@ -80,7 +86,9 @@ class ImageRecognitionService:
             for name in json_content.get("new_collections", []):
                 collection = await ArasaacService.get_data_for_new_collections(name)
                 new_collections.append(collection)
-            results = await ArasaacService.get_data_for_pictogram(json_content["results"]["name"])
+            results = await ArasaacService.get_data_for_pictogram(
+                json_content["results"]["name"]
+            )
 
         final_response = {
             "recomendations": json_content.get("recomendations", []),
