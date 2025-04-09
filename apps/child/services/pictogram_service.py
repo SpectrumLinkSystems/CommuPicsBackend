@@ -1,14 +1,14 @@
-from django.db.models import ObjectDoesNotExist
-
-from django.utils import timezone
 from django.db import transaction
+from django.db.models import ObjectDoesNotExist
+from django.utils import timezone
+
 from apps.child.models import Pictogram
 from apps.child.models.child import Child
 from apps.child.models.collection import Collection
 from apps.child.models.pictogram import PictogramUsage
-from apps.child.serializers.pictogram_serializer import \
-    CreatePictogramSerializer, CreateManyPictogramsSerializer
-from apps.external_apis.arasaac import ArasaacService
+from apps.child.serializers.pictogram_serializer import (
+    CreateManyPictogramsSerializer,
+)
 
 
 class PictogramService:
@@ -47,7 +47,7 @@ class PictogramService:
                 usage, created = PictogramUsage.objects.get_or_create(
                     pictogram=pictogram,
                     child=child,
-                    defaults={'cant_used': 1, 'date_used': timezone.now()}
+                    defaults={"cant_used": 1, "date_used": timezone.now()},
                 )
 
                 if not created:
@@ -68,17 +68,26 @@ class PictogramService:
 
 def create_many_pictograms(pictogram_data: CreateManyPictogramsSerializer):
     try:
-        Pictogram.objects.bulk_create([
-            Pictogram(
-                name=pictogram_data["name"].value,
-                image_url=pictogram_data["image_url"].value,
-                arasaac_id=pictogram_data["arasaac_id"].value,
-                arasaac_categories=pictogram_data["arasaac_categories"].value,
-                collection_id=Collection(id=collection_id),
-            ) for collection_id in pictogram_data["collection_ids"].value
-        ])
+        pictograms = []
+        picto_name = pictogram_data["name"].value
+        for collection_id in pictogram_data["collection_ids"].value:
+            exists_pictogram = Pictogram.objects.get(
+                name=picto_name.capitalize(), collection_id=collection_id
+            )
+            if not exists_pictogram:
+                pictograms.append(
+                    Pictogram(
+                        name=pictogram_data["name"].value,
+                        image_url=pictogram_data["image_url"].value,
+                        arasaac_id=pictogram_data["arasaac_id"].value,
+                        arasaac_categories=pictogram_data["arasaac_categories"].value,
+                        collection_id=Collection(id=collection_id),
+                    )
+                )
+
+        Pictogram.objects.bulk_create(pictograms)
     except ObjectDoesNotExist:
-        raise ValueError("Collections does not exist")
+        raise ValueError("Collection does not exist")
 
     # json_data = await ArasaacService.search_pictograms_by_word(name)
     # pictogram_id = await ArasaacService.get_pictogram_id(json_data)
