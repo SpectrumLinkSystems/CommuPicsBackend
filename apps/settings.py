@@ -39,7 +39,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "adrf",
-    "cloudinary",
     "rest_framework",
     "drf_spectacular",
     "apps.child",
