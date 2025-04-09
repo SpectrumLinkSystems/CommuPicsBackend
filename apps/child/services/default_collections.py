@@ -1,20 +1,42 @@
 DEFAULT_COLLECTIONS = [
     # Colección 1 - Alimentos
     {
-        'name': 'Alimentos',
-        'image_url': 'https://static.arasaac.org/pictograms/4610/4610_2500.png',
+        'name': 'Verduras',
+        'image_url': 'https://static.arasaac.org/pictograms/29131/29131_2500.png',
         'pictograms': [
             {'name': 'Tomate', 'image_url': 'https://static.arasaac.org/pictograms/2594/2594_2500.png', 'arasaac_id': '2594', 'arasaac_categories': 'feeding,food,plant-based food,vegetable,core vocabulary'},
-            {'name': 'Zanahoria', 'image_url': 'https://static.arasaac.org/pictograms/2619/2619_2500.png', 'arasaac_id': '2619', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
-            {'name': 'Pollo', 'image_url': 'https://static.arasaac.org/pictograms/4952/4952_2500.png', 'arasaac_id': '4952', 'arasaac_categories': 'meat,core vocabulary-feeding,gastronomy'},
-            {'name': 'Helado', 'image_url': 'https://static.arasaac.org/pictograms/35209/35209_2500.png', 'arasaac_id': '35209', 'arasaac_categories': 'feeding,food,ultra-processed food,dessert,summer'},
-            {'name': 'Pan', 'image_url': 'https://static.arasaac.org/pictograms/2494/2494_2500.png', 'arasaac_id': '2494', 'arasaac_categories': 'feeding,food,ultra-processed food,core vocabulary'},
-            {'name': 'Tostada', 'image_url': 'https://static.arasaac.org/pictograms/2787/2787_2500.png', 'arasaac_id': '2787', 'arasaac_categories': 'feeding,food,ultra-processed food'},
+            {'name': 'Zanahoria', 'image_url': 'https://static.arasaac.org/pictograms/2619/2619_2500.png', 'arasaac_id': '2619', 'arasaac_categories': 'feeding,food,plant-based food,vegetable,core vocabulary'},
+            {'name': 'Lechuga', 'image_url': 'https://static.arasaac.org/pictograms/2446/2446_2500.png', 'arasaac_id': '2446', 'arasaac_categories': 'feeding,food,plant-based food,vegetable,core vocabulary'},
+            {'name': 'Cebolla', 'image_url': 'https://static.arasaac.org/pictograms/38530/38530_2500.png', 'arasaac_id': '2620', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+            {'name': 'Pepino', 'image_url': 'https://static.arasaac.org/pictograms/2847/2847_2500.png', 'arasaac_id': '2847', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+            {'name': 'Pimiento', 'image_url': 'https://static.arasaac.org/pictograms/2839/2839_2500.png', 'arasaac_id': '2839', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+            {'name': 'Brócoli', 'image_url': 'https://static.arasaac.org/pictograms/23853/23853_2500.png', 'arasaac_id': '23853', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+            {'name': 'Berenjena', 'image_url': 'https://static.arasaac.org/pictograms/2660/2660_2500.png', 'arasaac_id': '2660', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+            {'name': 'Coliflor', 'image_url': 'https://static.arasaac.org/pictograms/23953/23953_2500.png', 'arasaac_id': '23953', 'arasaac_categories': 'feeding,food,plant-based food,vegetable'},
+        ]
+    },
+        {
+        'name': 'Proteínas',
+        'image_url': 'https://static.arasaac.org/pictograms/6961/6961_2500.png',
+        'pictograms': [
+            {'name': 'Pollo', 'image_url': 'https://static.arasaac.org/pictograms/4952/4952_2500.png', 'arasaac_id': '4952', 'arasaac_categories': 'meat,core vocabulary-feeding,gastronomy,core vocabulary'},
             {'name': 'Queso', 'image_url': 'https://static.arasaac.org/pictograms/2541/2541_2500.png', 'arasaac_id': '2541', 'arasaac_categories': 'feeding,food,animal-based food,dairy product,processed food,core vocabulary'},
-            {'name': 'Arroz', 'image_url': 'https://static.arasaac.org/pictograms/39387/39387_2500.png', 'arasaac_id': '39387', 'arasaac_categories': 'feeding,food,gastronomy,core vocabulary'},
             {'name': 'Huevo', 'image_url': 'https://static.arasaac.org/pictograms/38868/38868_2500.png', 'arasaac_id': '38868', 'arasaac_categories': 'feeding,food,animal-based food,egg product,animal,animal reproduction,oviparous'},
             {'name': 'Carne', 'image_url': 'https://static.arasaac.org/pictograms/2316/2316_2500.png', 'arasaac_id': '2316', 'arasaac_categories': 'feeding,food,animal-based food,meat,core vocabulary,animal'},
-            {'name': 'Pescado', 'image_url': 'https://static.arasaac.org/pictograms/2519/2519_2500.png', 'arasaac_id': '2519', 'arasaac_categories': 'feeding,food,animal-based food,fish,gastronomy'}
+            {'name': 'Pescado', 'image_url': 'https://static.arasaac.org/pictograms/2519/2519_2500.png', 'arasaac_id': '2519', 'arasaac_categories': 'feeding,food,animal-based food,fish,gastronomy'},
+            {'name': 'Yogur', 'image_url': 'https://static.arasaac.org/pictograms/2618/2618_2500.png', 'arasaac_id': '2618', 'arasaac_categories': 'feeding,food,animal-based food,dairy product,ultra-processed food,core vocabulary'},
+        ]
+    },
+        {
+        'name': 'Cereales y pan',
+        'image_url': 'https://static.arasaac.org/pictograms/38732/38732_2500.png',
+        'pictograms': [
+            {'name': 'Pan', 'image_url': 'https://static.arasaac.org/pictograms/2494/2494_2500.png', 'arasaac_id': '2494', 'arasaac_categories': 'feeding,food,ultra-processed food,core vocabulary'},
+            {'name': 'Tostada', 'image_url': 'https://static.arasaac.org/pictograms/2787/2787_2500.png', 'arasaac_id': '2787', 'arasaac_categories': 'feeding,food,ultra-processed food'},
+            {'name': 'Galleta', 'image_url': 'https://static.arasaac.org/pictograms/8312/8312_2500.png', 'arasaac_id': '8312', 'arasaac_categories': 'feeding,food,ultra-processed food,dessert,baking'},
+            {'name': 'Arroz', 'image_url': 'https://static.arasaac.org/pictograms/39387/39387_2500.png', 'arasaac_id': '39387', 'arasaac_categories': 'feeding,food,gastronomy,core vocabulary'},
+            {'name': 'Pasta', 'image_url': 'https://static.arasaac.org/pictograms/8652/8652_2500.png', 'arasaac_id': '8652', 'arasaac_categories': 'feeding,food,processed food'},
+            {'name': 'Cereales', 'image_url': 'https://static.arasaac.org/pictograms/2328/2328_2500.png', 'arasaac_id': '2328', 'arasaac_categories': 'feeding,food,ultra-processed food,core vocabulary'},
         ]
     },
     # Colección bebidas
@@ -106,11 +128,11 @@ DEFAULT_COLLECTIONS = [
         'name': 'Letras',
         'image_url': 'https://static.arasaac.org/pictograms/34361/34361_2500.png',
         'pictograms': [
-            {'name': 'A', 'image_url': 'https://static.arasaac.org/pictograms/3049/3049_2500.png', 'arasaac_id': '3049', 'arasaac_categories': 'communication,language,alphabet,letter'},
-            {'name': 'B', 'image_url': 'https://static.arasaac.org/pictograms/3061/3061_2500.png', 'arasaac_id': '3061', 'arasaac_categories': 'communication,language,alphabet,letter'},
-            {'name': 'C', 'image_url': 'https://static.arasaac.org/pictograms/3069/3069_2500.png', 'arasaac_id': '3069', 'arasaac_categories': 'communication,language,alphabet,letter'},
-            {'name': 'D', 'image_url': 'https://static.arasaac.org/pictograms/3088/3088_2500.png', 'arasaac_id': '3088', 'arasaac_categories': 'communication,language,alphabet,letter'},
-            {'name': 'E', 'image_url': 'https://static.arasaac.org/pictograms/3096/3096_2500.png', 'arasaac_id': '3096', 'arasaac_categories': 'communication,language,alphabet,letter'},
+            {'name': 'A', 'image_url': 'https://static.arasaac.org/pictograms/3049/3049_2500.png', 'arasaac_id': '3049', 'arasaac_categories': 'communication,language,alphabet,letter,core vocabulary'},
+            {'name': 'B', 'image_url': 'https://static.arasaac.org/pictograms/3061/3061_2500.png', 'arasaac_id': '3061', 'arasaac_categories': 'communication,language,alphabet,letter,core vocabulary'},
+            {'name': 'C', 'image_url': 'https://static.arasaac.org/pictograms/3069/3069_2500.png', 'arasaac_id': '3069', 'arasaac_categories': 'communication,language,alphabet,letter,core vocabulary'},
+            {'name': 'D', 'image_url': 'https://static.arasaac.org/pictograms/3088/3088_2500.png', 'arasaac_id': '3088', 'arasaac_categories': 'communication,language,alphabet,letter,core vocabulary'},
+            {'name': 'E', 'image_url': 'https://static.arasaac.org/pictograms/3096/3096_2500.png', 'arasaac_id': '3096', 'arasaac_categories': 'communication,language,alphabet,letter,core vocabulary'},
             {'name': 'F', 'image_url': 'https://static.arasaac.org/pictograms/3101/3101_2500.png', 'arasaac_id': '3101', 'arasaac_categories': 'communication,language,alphabet,letter'},
             {'name': 'G', 'image_url': 'https://static.arasaac.org/pictograms/3104/3104_2500.png', 'arasaac_id': '3104', 'arasaac_categories': 'communication,language,alphabet,letter'},
             {'name': 'H', 'image_url': 'https://static.arasaac.org/pictograms/3112/3112_2500.png', 'arasaac_id': '3112', 'arasaac_categories': 'communication,language,alphabet,letter'},
@@ -209,6 +231,13 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Abrir', 'image_url': 'https://static.arasaac.org/pictograms/24825/24825_2500.png', 'arasaac_id': '24825', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
             {'name': 'Cerrar', 'image_url': 'https://static.arasaac.org/pictograms/24976/24976_2500.png', 'arasaac_id': '24976', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
             {'name': 'Limpiar', 'image_url': 'https://static.arasaac.org/pictograms/3351/3351_2500.png', 'arasaac_id': '3351', 'arasaac_categories': 'communication,language,verb,usual verbs,object,cleaning product,core vocabulary'},
+            {'name': 'Querer', 'image_url': 'https://static.arasaac.org/pictograms/36518/36518_2500.png', 'arasaac_id': '36518', 'arasaac_categories': 'communication,language,verb,psychology,human response,object,feeding,movement,traffic,mode of transport,education,educational material,leisure,sport,sport material,toy'},
+            {'name': 'Comer', 'image_url': 'https://static.arasaac.org/pictograms/6456/6456_2500.png', 'arasaac_id': '6456', 'arasaac_categories': 'communication,language,verb,feeding,food,person,basic needs,core vocabulary,gastronomy'},
+            {'name': 'Beber', 'image_url': 'https://static.arasaac.org/pictograms/6061/6061_2500.png', 'arasaac_id': '6061', 'arasaac_categories': 'communication,language,verb,usual verbs,feeding,food,beverage,person,basic needs,core vocabulary'},
+            {'name': 'Jugar', 'image_url': 'https://static.arasaac.org/pictograms/6537/6537_2500.png', 'arasaac_id': '6537', 'arasaac_categories': 'communication,language,verb,leisure,sport,traditional game,usual verbs,core vocabulary'},
+            {'name': 'Dormir', 'image_url': 'https://static.arasaac.org/pictograms/6479/6479_2500.png', 'arasaac_id': '6479', 'arasaac_categories': 'communication,language,verb,usual verbs,person,basic needs,routine,core vocabulary'},
+            {'name': 'Vestir', 'image_url': 'https://static.arasaac.org/pictograms/6627/6627_2500.png', 'arasaac_id': '6627', 'arasaac_categories': 'communication,language,verb,usual verbs,object,fashion,clothes,person,basic needs,routine,core vocabulary,accessories'},
+            {'name': 'Despertar', 'image_url': 'https://static.arasaac.org/pictograms/8988/8988_2500.png', 'arasaac_id': '8988', 'arasaac_categories': 'communication,language,verb,person,routine'},
         ]
     },
     # Colección 9 - Transporte
@@ -230,18 +259,15 @@ DEFAULT_COLLECTIONS = [
     },
     # Colección 10 - Rutina Diaria
     {
-        'name': 'Rutina Diaria',
+        'name': 'Rutinas',
         'image_url': 'https://static.arasaac.org/pictograms/36347/36347_2500.png',
-        'pictograms': [
-            {'name': 'Despertar', 'image_url': 'https://static.arasaac.org/pictograms/8988/8988_2500.png', 'arasaac_id': '8988', 'arasaac_categories': 'communication,language,verb,person,routine'},
-            {'name': 'Cepillar los Dientes', 'image_url': 'https://static.arasaac.org/pictograms/31880/31880_2500.png', 'arasaac_id': '31880', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,object,hygiene product,person,routine'},
-            {'name': 'Vestir', 'image_url': 'https://static.arasaac.org/pictograms/6627/6627_2500.png', 'arasaac_id': '6627', 'arasaac_categories': 'communication,language,verb,usual verbs,object,fashion,clothes,person,basic needs,routine,core vocabulary,accessories'},
-            {'name': 'Comer', 'image_url': 'https://static.arasaac.org/pictograms/6456/6456_2500.png', 'arasaac_id': '6456', 'arasaac_categories': 'communication,language,verb,feeding,food,person,basic needs,core vocabulary,gastronomy'},
+        'pictograms': [          
+            {'name': 'Cepillar los Dientes', 'image_url': 'https://static.arasaac.org/pictograms/31880/31880_2500.png', 'arasaac_id': '31880', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,object,hygiene product,person,routine'},        
             {'name': 'Ir al colegio', 'image_url': 'https://static.arasaac.org/pictograms/36473/36473_2500.png', 'arasaac_id': '36473', 'arasaac_categories': 'communication,language,verb,movement,education,building,place'},
-            {'name': 'Jugar', 'image_url': 'https://static.arasaac.org/pictograms/6537/6537_2500.png', 'arasaac_id': '6537', 'arasaac_categories': 'communication,language,verb,leisure,sport,traditional game,usual verbs,core vocabulary'},
-            {'name': 'Dormir', 'image_url': 'https://static.arasaac.org/pictograms/6479/6479_2500.png', 'arasaac_id': '6479', 'arasaac_categories': 'communication,language,verb,usual verbs,person,basic needs,routine,core vocabulary'},
             {'name': 'Limpiar la boca', 'image_url': 'https://static.arasaac.org/pictograms/17271/17271_2500.png', 'arasaac_id': '17271', 'arasaac_categories': 'communication,language,verb,person,routine'},
-            {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'}
+            {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'},
+            {'name': 'Hacer la tarea', 'image_url': 'https://static.arasaac.org/pictograms/32814/32814_2500.png', 'arasaac_id': '32814', 'arasaac_categories': 'education,educational task,communication,language,verb,usual verbs,core vocabulary'},
+            {'name': 'Hacer la cama', 'image_url': 'https://static.arasaac.org/pictograms/5481/5481_2500.png', 'arasaac_id': '5481', 'arasaac_categories': 'communication,language,verb,person,routine'},
         ]
     },
     # Colección 10 - pronombres  para hacer oraciones
