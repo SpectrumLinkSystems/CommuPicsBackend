@@ -1,6 +1,6 @@
 from .models import Therapist
 from apps.child.models import Child
-
+import cv2
 from django.db.models import ObjectDoesNotExist
 
 def create_therapist(data):
