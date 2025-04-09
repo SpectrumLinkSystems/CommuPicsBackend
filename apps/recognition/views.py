@@ -3,10 +3,8 @@ from asgiref.sync import sync_to_async
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 
-from apps.child.services import child_service
 from apps.external_apis.image_recognotion_service import ImageRecognitionService
 from apps.images_storage.cloudinary_service import CloudinaryService
 from apps.recognition.serializers import RecognitionRequestSerializer

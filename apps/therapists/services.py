@@ -1,9 +1,5 @@
 from .models import Therapist
 from apps.child.models import Child
-import qrcode
-from pyzbar.pyzbar import decode
-from PIL import Image
-import cv2
 
 from django.db.models import ObjectDoesNotExist
 
