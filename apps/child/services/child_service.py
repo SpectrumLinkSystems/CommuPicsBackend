@@ -120,33 +120,30 @@ def get_child_collections(child_id):
         return Collection.objects.none()
 
 
-def generar_qr(id_nino, nombre_archivo="qr_nino.png"):
+def generar_qr(id_nino):
     try:
-        # Verifica si el niño existe
         child = Child.objects.get(id=id_nino)
     except ObjectDoesNotExist:
         return {"error": "El niño con el ID proporcionado no existe."}
 
-    # Genera el QR
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=10,
         border=4,
     )
-    qr.add_data(str(id_nino))  # Se asegura de que sea un string
+    qr.add_data(str(id_nino))
     qr.make(fit=True)
     img = qr.make_image(fill='black', back_color='white')
 
-    # Guarda la imagen en un buffer en memoria
     buffer = BytesIO()
     img.save(buffer, format="PNG")
     img_base64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-    # Guarda el QR como archivo si es necesario
-    img.save(nombre_archivo)
-
-    return {"qr_code": img_base64, "message": f"QR generado para el niño {child.name}."}
+    return {
+        "qr_code": img_base64,
+        "message": f"QR generado para el niño {child.name}."
+    }
 
 
 def get_collections_by_child_id(child_id):
