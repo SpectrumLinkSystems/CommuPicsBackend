@@ -67,17 +67,20 @@ class PictogramService:
 
 
 def create_many_pictograms(pictogram_data: CreateManyPictogramsSerializer):
+    
     try:
         pictograms = []
         picto_name = pictogram_data["name"].value
+
         for collection_id in pictogram_data["collection_ids"].value:
-            exists_pictogram = Pictogram.objects.get(
+            exists = Pictogram.objects.filter(
                 name=picto_name.capitalize(), collection_id=collection_id
-            )
-            if not exists_pictogram:
+            ).exists()
+
+            if not exists:
                 pictograms.append(
                     Pictogram(
-                        name=pictogram_data["name"].value,
+                        name=picto_name,
                         image_url=pictogram_data["image_url"].value,
                         arasaac_id=pictogram_data["arasaac_id"].value,
                         arasaac_categories=pictogram_data["arasaac_categories"].value,
@@ -86,6 +89,7 @@ def create_many_pictograms(pictogram_data: CreateManyPictogramsSerializer):
                 )
 
         Pictogram.objects.bulk_create(pictograms)
+
     except ObjectDoesNotExist:
         raise ValueError("Collection does not exist")
 
