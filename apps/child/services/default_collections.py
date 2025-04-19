@@ -218,7 +218,9 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Pequeño', 'image_url': 'https://static.arasaac.org/pictograms/4716/4716_2500.png', 'arasaac_id': '4716', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,size,core vocabulary,object'},
             {'name': 'Delicioso', 'image_url': 'https://static.arasaac.org/pictograms/32340/32340_2500.png', 'arasaac_id': '32340', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,feeding,food,taste'},
             {'name': 'Frío', 'image_url': 'https://static.arasaac.org/pictograms/26865/26865_2500.png', 'arasaac_id': '26865', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,physics,feeding,cookery,meteorology'},
-            {'name': 'Caliente', 'image_url': 'https://static.arasaac.org/pictograms/26716/26716_2500.png', 'arasaac_id': '26716', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,physics,feeding,cookery'}
+            {'name': 'Caliente', 'image_url': 'https://static.arasaac.org/pictograms/26716/26716_2500.png', 'arasaac_id': '26716', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,physics,feeding,cookery'},
+            {'name': 'Mojado', 'image_url': 'https://static.arasaac.org/pictograms/25253/25253_2500.png', 'arasaac_id': '25253', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,core vocabulary'},
+            {'name': 'Seco', 'image_url': 'https://static.arasaac.org/pictograms/25437/25437_2500.png', 'arasaac_id': '25437', 'arasaac_categories': 'communication,language,adjective,qualifying adjective,core vocabulary'}
         ]
     },
     # Colección 9 - Verbos
@@ -226,7 +228,7 @@ DEFAULT_COLLECTIONS = [
         'name': 'Verbos',
         'image_url': 'https://static.arasaac.org/pictograms/32067/32067_2500.png',
         'pictograms': [
-            {'name': 'Empujar', 'image_url': 'https://static.arasaac.org/pictograms/39442/39442_2500.png', 'arasaac_id': '39442', 'arasaac_categories': 'communication,language,verb'},
+            {'name': 'Ir a', 'image_url': 'https://static.arasaac.org/pictograms/8142/8142_2500.png', 'arasaac_id': '8142', 'arasaac_categories': 'communication,language,verb,usual verbs,core vocabulary'},
             {'name': 'Tocar', 'image_url': 'https://static.arasaac.org/pictograms/34098/34098_2500.png', 'arasaac_id': '34098', 'arasaac_categories': 'communication,language,verb'},
             {'name': 'Abrir', 'image_url': 'https://static.arasaac.org/pictograms/24825/24825_2500.png', 'arasaac_id': '24825', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
             {'name': 'Cerrar', 'image_url': 'https://static.arasaac.org/pictograms/24976/24976_2500.png', 'arasaac_id': '24976', 'arasaac_categories': 'usual verbs,core vocabulary-communication'},
@@ -238,6 +240,7 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Dormir', 'image_url': 'https://static.arasaac.org/pictograms/6479/6479_2500.png', 'arasaac_id': '6479', 'arasaac_categories': 'communication,language,verb,usual verbs,person,basic needs,routine,core vocabulary'},
             {'name': 'Vestir', 'image_url': 'https://static.arasaac.org/pictograms/6627/6627_2500.png', 'arasaac_id': '6627', 'arasaac_categories': 'communication,language,verb,usual verbs,object,fashion,clothes,person,basic needs,routine,core vocabulary,accessories'},
             {'name': 'Despertar', 'image_url': 'https://static.arasaac.org/pictograms/8988/8988_2500.png', 'arasaac_id': '8988', 'arasaac_categories': 'communication,language,verb,person,routine'},
+            {'name': 'Empujar', 'image_url': 'https://static.arasaac.org/pictograms/39442/39442_2500.png', 'arasaac_id': '39442', 'arasaac_categories': 'communication,language,verb'},
         ]
     },
     # Colección 9 - Transporte
@@ -268,6 +271,36 @@ DEFAULT_COLLECTIONS = [
             {'name': 'Lavar las manos', 'image_url': 'https://static.arasaac.org/pictograms/8975/8975_2500.png', 'arasaac_id': '8975', 'arasaac_categories': 'communication,language,verb,human body,hygiene,corporal hygiene,person,routine'},
             {'name': 'Hacer la tarea', 'image_url': 'https://static.arasaac.org/pictograms/32814/32814_2500.png', 'arasaac_id': '32814', 'arasaac_categories': 'education,educational task,communication,language,verb,usual verbs,core vocabulary'},
             {'name': 'Hacer la cama', 'image_url': 'https://static.arasaac.org/pictograms/5481/5481_2500.png', 'arasaac_id': '5481', 'arasaac_categories': 'communication,language,verb,person,routine'},
+        ]
+    },    # Colección 10 - Partes del cuerpo
+    {
+        'name': 'Partes del cuerpo',
+        'image_url': 'https://static.arasaac.org/pictograms/29145/29145_2500.png',
+        'pictograms': [          
+            {'name': 'Cabeza', 'image_url': 'https://static.arasaac.org/pictograms/2673/2673_2500.png', 'arasaac_id': '2673', 'arasaac_categories': 'human body,anatomy,human anatomy'},        
+            {'name': 'Hombro', 'image_url': 'https://static.arasaac.org/pictograms/2977/2977_2500.png', 'arasaac_id': '2977', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,joint system'},
+            {'name': 'Barriga', 'image_url': 'https://static.arasaac.org/pictograms/2786/2786_2500.png', 'arasaac_id': '2786', 'arasaac_categories': 'human body,anatomy,human anatomy,core vocabulary'},
+            {'name': 'Garganta', 'image_url': 'https://static.arasaac.org/pictograms/3332/3332_2500.png', 'arasaac_id': '3332', 'arasaac_categories': 'human body,anatomy,human anatomy,human physiology,physiology,digestive system'},
+            {'name': 'Pie', 'image_url': 'https://static.arasaac.org/pictograms/25327/25327_2500.png', 'arasaac_id': '25327', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,locomotor system,core vocabulary'},
+            {'name': 'Mano', 'image_url': 'https://static.arasaac.org/pictograms/2928/2928_2500.png', 'arasaac_id': '2928', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,senses'},
+            {'name': 'Brazo', 'image_url': 'https://static.arasaac.org/pictograms/2669/2669_2500.png', 'arasaac_id': '2669', 'arasaac_categories': 'human body,anatomy,human anatomy,core vocabulary'},
+            {'name': 'Pierna', 'image_url': 'https://static.arasaac.org/pictograms/8666/8666_2500.png', 'arasaac_id': '8666', 'arasaac_categories': 'human body,anatomy,human anatomy,core vocabulary'},
+            {'name': 'Lengua', 'image_url': 'https://static.arasaac.org/pictograms/2944/2944_2500.png', 'arasaac_id': '2944', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,senses,digestive system,core vocabulary'},
+            {'name': 'Ojo', 'image_url': 'https://static.arasaac.org/pictograms/6573/6573_2500.png', 'arasaac_id': '6573', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,senses,visual system,health,medicine,ophthalmology'},
+            {'name': 'Nariz', 'image_url': 'https://static.arasaac.org/pictograms/2887/2887_2500.png', 'arasaac_id': '2887', 'arasaac_categories': 'human body,anatomy,human anatomy,physiology,human physiology,senses,respiratory system,covid-19,core vocabulary'},
+            {'name': 'Cuello', 'image_url': 'https://static.arasaac.org/pictograms/2727/2727_2500.png', 'arasaac_id': '2727', 'arasaac_categories': 'human body,anatomy,human anatomy,core vocabulary'}
+        ]
+    },
+    {
+        'name': 'Lugares',
+        'image_url': 'https://static.arasaac.org/pictograms/32598/32598_2500.png',
+        'pictograms': [   
+            {'name': 'Baño', 'image_url': 'https://static.arasaac.org/pictograms/27559/27559_2500.png', 'arasaac_id': '27559', 'arasaac_categories': 'place,building,room,health,medicine,medical center,communication,signaling system'},
+            {'name': 'Cocina', 'image_url': 'https://static.arasaac.org/pictograms/33070/33070_2500.png', 'arasaac_id': '33070', 'arasaac_categories': 'place,building,home,room'},
+            {'name': 'Casa', 'image_url': 'https://static.arasaac.org/pictograms/6964/6964_2500.png', 'arasaac_id': '6964', 'arasaac_categories': 'place,building,home,core vocabulary,document'},
+            {'name': 'Parque', 'image_url': 'https://static.arasaac.org/pictograms/2859/2859_2500.png', 'arasaac_id': '2859', 'arasaac_categories': 'place,facility,recreational facility,leisure,playground,core vocabulary'},        
+            {'name': 'Hospital', 'image_url': 'https://static.arasaac.org/pictograms/3116/3116_2500.png', 'arasaac_id': '3116', 'arasaac_categories': 'health,medicine,medical center,place,building,covid-19'},
+            {'name': 'Colegio', 'image_url': 'https://static.arasaac.org/pictograms/3082/3082_2500.png', 'arasaac_id': '3082', 'arasaac_categories': 'education,building,place,educational institution'}
         ]
     },
     # Colección 10 - pronombres  para hacer oraciones
